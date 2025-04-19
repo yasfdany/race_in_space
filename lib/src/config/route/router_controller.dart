@@ -14,8 +14,10 @@ final router = GoRouter(
   routes: [
     GoRoute(
       path: MainMenuPage.routeName,
-      builder: (context, state) {
-        return MainMenuPage();
+      pageBuilder: (BuildContext context, GoRouterState state) {
+        return NoTransitionPage(
+          child: MainMenuPage(),
+        );
       },
       routes: [
         GoRoute(

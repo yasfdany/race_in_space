@@ -5,6 +5,7 @@ import '../../../../main.dart';
 import 'controllers/game_controller.dart';
 import 'controllers/game_state.dart';
 import 'game_scene.dart';
+import 'ui/win_dialog.dart';
 
 class GamePage extends StatefulWidget {
   const GamePage({super.key});
@@ -27,7 +28,7 @@ class _GamePageState extends State<GamePage> {
       GameState(),
     );
     controller = registerOnce<GameController>(
-      GameController(state),
+      GameController(state, game),
     );
   }
 
@@ -48,7 +49,11 @@ class _GamePageState extends State<GamePage> {
       child: GameWidget<GameScene>(
         game: game,
         initialActiveOverlays: [],
-        overlayBuilderMap: {},
+        overlayBuilderMap: {
+          WinDialog.overlayName: (context, game) {
+            return WinDialog(game: game);
+          },
+        },
       ),
     );
   }
