@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../../main.dart';
 import '../../../components/buttons/rectangle_button.dart';
 import '../../../components/texts/text_large.dart';
 import '../../main_menu/main_menu_page.dart';
+import '../controllers/game_controller.dart';
 
 class WinDialog extends StatelessWidget {
   const WinDialog({
@@ -50,7 +52,10 @@ class WinDialog extends StatelessWidget {
                     ),
                     RectangleButton(
                       text: 'Next Level',
-                      onTap: () {},
+                      onTap: () {
+                        final gameController = locator.get<GameController>();
+                        gameController.nextLevel();
+                      },
                     ),
                   ],
                 )

@@ -19,6 +19,7 @@ class Solar extends PositionedEntity {
 
   @override
   void onLoad() {
+    anchor = Anchor.center;
     size = Vector2.all(24);
     add(CircleComponent(
       anchor: Anchor.center,

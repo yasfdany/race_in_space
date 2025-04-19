@@ -9,20 +9,20 @@ import '../ship.dart';
 class PullBehavior extends DraggableBehavior<Ship> {
   @override
   void onDragUpdate(DragUpdateEvent event) {
-    if (parent.state == ShipState.idle) {
-      parent.position.add(event.localDelta);
+    if (parent.state == ShipState.moving) return;
+    parent.position.add(event.localDelta);
 
-      final direction = parent.position - parent.startPosition;
-      if (direction.length > 0) {
-        parent.spriteComponent.angle =
-            atan2(-direction.y, -direction.x) + tau / 4;
-      }
-      super.onDragUpdate(event);
+    final direction = parent.position - parent.startPosition;
+    if (direction.length > 0) {
+      parent.spriteComponent.angle =
+          atan2(-direction.y, -direction.x) + tau / 4;
     }
+    super.onDragUpdate(event);
   }
 
   @override
   void onDragEnd(DragEndEvent event) {
+    if (parent.state == ShipState.moving) return;
     parent.state = ShipState.moving;
     double distance =
         parent.startPosition.distanceTo(parent.position).clamp(0, 100);
