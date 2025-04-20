@@ -71,13 +71,17 @@ class Ship extends PositionedEntity with HasGameReference<GameScene> {
         position.x < -viewportSize.x ||
         position.y > viewportSize.y ||
         position.y < -viewportSize.y) {
-      position = Vector2(
-        0,
-        (game.size.y / 3),
-      );
-      spriteComponent.angle = 0;
-      velocity = Vector2(0, 0);
-      state = ShipState.idle;
+      reset();
     }
+  }
+
+  void reset() {
+    position = Vector2(
+      0,
+      (game.size.y / 3),
+    );
+    spriteComponent.angle = 0;
+    velocity = Vector2(0, 0);
+    state = ShipState.idle;
   }
 }
