@@ -14,8 +14,7 @@ class PullBehavior extends DraggableBehavior<Ship> {
 
     final direction = parent.position - parent.startPosition;
     if (direction.length > 0) {
-      parent.spriteComponent.angle =
-          atan2(-direction.y, -direction.x) + tau / 4;
+      parent.shipSprite.angle = atan2(-direction.y, -direction.x) + tau / 4;
     }
     super.onDragUpdate(event);
   }

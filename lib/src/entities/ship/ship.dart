@@ -1,15 +1,13 @@
 import 'dart:math';
 
-import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame/geometry.dart';
 import 'package:flame_behaviors/flame_behaviors.dart';
 
-import '../../../main.dart';
-import '../../config/di/get_it_ext.dart';
 import '../../ui/scenes/game/game_scene.dart';
 import 'behaviors/pull_behavior.dart';
 import 'behaviors/velocity_behavior.dart';
+import 'ship_sprite.dart';
 
 enum ShipState {
   idle,
@@ -21,15 +19,12 @@ class Ship extends PositionedEntity with HasGameReference<GameScene> {
 
   static List<Behavior<EntityMixin>> get _buildBehaviors {
     return [
-      PropagatingCollisionBehavior(CircleHitbox()),
-      GravityBehavior(),
+      VelocityBehavior(),
       PullBehavior(),
     ];
   }
 
-  final assetsController = locator.assetsController;
-
-  late SpriteComponent spriteComponent;
+  late ShipSprite shipSprite;
 
   Vector2 velocity = Vector2(0, 0);
   ShipState state = ShipState.idle;
@@ -47,23 +42,17 @@ class Ship extends PositionedEntity with HasGameReference<GameScene> {
       0,
       (game.size.y / 3),
     );
-    spriteComponent = SpriteComponent(
-      sprite: Sprite(
-        assetsController.rocket,
-        srcSize: Vector2(56, 56),
-      ),
-      size: Vector2(56, 56),
-      anchor: Anchor.center,
+    shipSprite = ShipSprite(
       position: size / 2,
     );
-    add(spriteComponent);
+    add(shipSprite);
   }
 
   @override
   void update(double dt) {
     super.update(dt);
     if (velocity.length > 0) {
-      spriteComponent.angle = atan2(velocity.y, velocity.x) + tau / 4;
+      shipSprite.angle = atan2(velocity.y, velocity.x) + tau / 4;
       state = ShipState.moving;
     }
     final viewportSize = (game.size / 2) / game.camera.viewfinder.zoom;
@@ -80,7 +69,7 @@ class Ship extends PositionedEntity with HasGameReference<GameScene> {
       0,
       (game.size.y / 3),
     );
-    spriteComponent.angle = 0;
+    shipSprite.angle = 0;
     velocity = Vector2(0, 0);
     state = ShipState.idle;
   }
