@@ -1,10 +1,14 @@
+import 'dart:math';
+
 import 'package:flame/components.dart';
+import 'package:flame/geometry.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../entities/finish_line/finish_line.dart';
 import '../../../../entities/level/level.dart';
 import '../../../../entities/planet/planet.dart';
 import '../../../../entities/ship/ship.dart';
+import '../../../../entities/solar/behaviors/satellite_behavior.dart';
 import '../../../../entities/solar/solar.dart';
 
 class Gravity extends Level {
@@ -27,13 +31,26 @@ class Gravity extends Level {
         gravityArea: 3,
         position: Vector2.zero(),
       ),
-      Solar(position: Vector2(-60, -80)),
-      Solar(position: Vector2(-80, 0)),
-      Solar(position: Vector2(-60, 80)),
-      Solar(position: Vector2(60, -80)),
-      Solar(position: Vector2(80, 0)),
-      Solar(position: Vector2(60, 80)),
+      ..._generateSolarSatellite(),
       Ship(),
     ];
+  }
+
+  List<Component> _generateSolarSatellite() {
+    return List.generate(
+      5,
+      (i) {
+        final radius = 90;
+        final angle = i * tau / 12;
+
+        double satelliteX = radius * cos(angle);
+        double satelliteY = radius * sin(angle);
+
+        return Solar(
+          angle: angle,
+          position: Vector2(satelliteX, satelliteY),
+        )..add(SatelliteBehavior(center: Vector2.zero(), radius: 90));
+      },
+    );
   }
 }

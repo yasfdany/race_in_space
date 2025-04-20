@@ -3,11 +3,13 @@ import 'package:flame/components.dart';
 import 'package:flame_behaviors/flame_behaviors.dart';
 import 'package:flutter/material.dart';
 
+import '../../ui/scenes/game/game_scene.dart';
 import 'behaviors/collect_behavior.dart';
 
-class Solar extends PositionedEntity {
+class Solar extends PositionedEntity with HasGameReference<GameScene> {
   Solar({
     required super.position,
+    super.angle = 0,
   }) : super(behaviors: _buildBehaviors);
 
   static List<Behavior<EntityMixin>> get _buildBehaviors {

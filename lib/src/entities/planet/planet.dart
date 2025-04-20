@@ -1,10 +1,8 @@
-import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame_behaviors/flame_behaviors.dart';
 import 'package:flutter/material.dart';
 
-import 'behaviors/drag_behavior.dart';
-import 'behaviors/gravity_behavior.dart';
+import 'gravitation_area.dart';
 
 class Planet extends PositionedEntity {
   Planet({
@@ -15,11 +13,7 @@ class Planet extends PositionedEntity {
   }) : super(behaviors: _buildBehaviors);
 
   static List<Behavior<EntityMixin>> get _buildBehaviors {
-    return [
-      PropagatingCollisionBehavior(CircleHitbox()),
-      GravityBehavior(),
-      DragBehavior(),
-    ];
+    return [];
   }
 
   double radius;
@@ -27,18 +21,10 @@ class Planet extends PositionedEntity {
 
   @override
   void onLoad() {
-    size = Vector2.all(radius * 2 * gravityArea);
-    add(
-      CircleComponent(
-        anchor: Anchor.center,
-        position: size / 2,
-        radius: radius * gravityArea,
-        paint: Paint()
-          ..color = Colors.red.withValues(
-            alpha: 0.2,
-          ),
-      ),
-    );
+    add(GravitationArea(
+      position: size / 2,
+      radius: radius * gravityArea,
+    ));
     add(CircleComponent(
       anchor: Anchor.center,
       radius: radius,
