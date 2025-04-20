@@ -14,11 +14,11 @@ class GameController {
 
   void nextLevel() {
     game.overlays.remove(WinDialog.overlayName);
-    game.world.children.clear();
     state.level = levelState.levels[state.level.level];
     state.attempts = state.level.attempts;
+    state.solarCollected = 0;
 
-    game.world.addAll(state.level.entities);
+    game.world = state.level.world;
     game.camera.viewfinder.zoom = state.level.zoom;
   }
 }

@@ -1,7 +1,6 @@
 import 'package:flame/components.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../../../entities/finish_line/finish_line.dart';
 import '../../../../entities/level/level.dart';
 import '../../../../entities/ship/ship.dart';
 import '../../../../entities/solar/solar.dart';
@@ -13,16 +12,18 @@ class SolarEnergy extends Level {
           level: 1,
           zoom: 1,
           canZoom: false,
-          entities: [],
+          world: World(),
+          startingPos: Vector2(0, (1.sh / 3)),
         );
 
   @override
-  @override
-  List<Component> get entities {
-    return [
-      FinishLine(position: Vector2(0, (-1.sh / 2) + 20)),
-      ...List.generate(5, (i) => Solar(position: Vector2(0, (i * 40) - 100))),
-      Ship(),
-    ];
+  World get world {
+    return World(children: [
+      ...List.generate(
+        solar,
+        (i) => Solar(position: Vector2(0, (i * 40) - 100)),
+      ),
+      Ship(position: startingPos),
+    ]);
   }
 }

@@ -17,4 +17,11 @@ class GameState extends ChangeNotifier {
     _attempts = value;
     notifyListeners();
   }
+
+  late int _solarCollected = 0;
+  int get solarCollected => _solarCollected;
+  set solarCollected(int value) {
+    _solarCollected = value;
+    notifyListeners();
+  }
 }

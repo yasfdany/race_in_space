@@ -17,7 +17,7 @@ class GameScene extends FlameGame with EntityMixin, HasCollisionDetection {
       width: size.x,
       height: size.y,
     );
-    world.addAll(controller.state.level.entities);
+    world = controller.state.level.world;
     camera.viewfinder.zoom = controller.state.level.zoom;
   }
 

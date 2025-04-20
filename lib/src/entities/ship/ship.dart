@@ -4,6 +4,8 @@ import 'package:flame/components.dart';
 import 'package:flame/geometry.dart';
 import 'package:flame_behaviors/flame_behaviors.dart';
 
+import '../../../main.dart';
+import '../../ui/scenes/game/controllers/game_controller.dart';
 import '../../ui/scenes/game/game_scene.dart';
 import 'behaviors/pull_behavior.dart';
 import 'behaviors/velocity_behavior.dart';
@@ -15,7 +17,9 @@ enum ShipState {
 }
 
 class Ship extends PositionedEntity with HasGameReference<GameScene> {
-  Ship() : super(behaviors: _buildBehaviors);
+  Ship({
+    super.position,
+  }) : super(behaviors: _buildBehaviors);
 
   static List<Behavior<EntityMixin>> get _buildBehaviors {
     return [
@@ -24,24 +28,19 @@ class Ship extends PositionedEntity with HasGameReference<GameScene> {
     ];
   }
 
+  late final _gameController = locator.get<GameController>();
+
   late ShipSprite shipSprite;
 
   Vector2 velocity = Vector2(0, 0);
   ShipState state = ShipState.idle;
 
-  late final startPosition = Vector2(
-    0,
-    (game.size.y / 3),
-  );
+  late final startPosition = position.clone();
 
   @override
   void onLoad() {
     size = Vector2(56, 56);
     anchor = Anchor.center;
-    position = Vector2(
-      0,
-      (game.size.y / 3),
-    );
     shipSprite = ShipSprite(
       position: size / 2,
     );
@@ -65,10 +64,8 @@ class Ship extends PositionedEntity with HasGameReference<GameScene> {
   }
 
   void reset() {
-    position = Vector2(
-      0,
-      (game.size.y / 3),
-    );
+    // if (game.overlays.isActive(WinDialog.overlayName)) return;
+    position = _gameController.state.level.startingPos;
     shipSprite.angle = 0;
     velocity = Vector2(0, 0);
     state = ShipState.idle;

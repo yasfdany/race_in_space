@@ -18,6 +18,7 @@ class Planet extends PositionedEntity {
     return [
       PropagatingCollisionBehavior(CircleHitbox()),
       CollideBehavior(),
+      // DragBehavior(),
     ];
   }
 

@@ -3,23 +3,15 @@ import 'package:flame_behaviors/flame_behaviors.dart';
 
 import '../../../../main.dart';
 import '../../../ui/scenes/game/controllers/game_controller.dart';
-import '../../../ui/scenes/game/ui/win_dialog.dart';
 import '../../ship/ship_sprite.dart';
-import '../solar.dart';
+import '../asteroid.dart';
 
-class CollectBehavior extends CollisionBehavior<ShipSprite, Solar> {
+class CollideBehavior extends CollisionBehavior<ShipSprite, Asteroid> {
   late final _gameController = locator.get<GameController>();
 
   @override
   void onCollision(Set<Vector2> intersectionPoints, ShipSprite other) async {
     super.onCollision(intersectionPoints, other);
-
-    parent.removeFromParent();
-    _gameController.state.solarCollected++;
-
-    if (_gameController.state.solarCollected ==
-        _gameController.state.level.solar) {
-      _gameController.game.overlays.add(WinDialog.overlayName);
-    }
+    other.ship.reset();
   }
 }
