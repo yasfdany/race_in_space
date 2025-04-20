@@ -5,7 +5,6 @@ import 'package:flame_behaviors/flame_behaviors.dart';
 import '../../../main.dart';
 import '../../config/di/get_it_ext.dart';
 import 'behaviors/collide_behavior.dart';
-import 'behaviors/drag_behavior.dart';
 
 class Asteroid extends PositionedEntity {
   Asteroid({
@@ -19,7 +18,7 @@ class Asteroid extends PositionedEntity {
     return [
       PropagatingCollisionBehavior(CircleHitbox()),
       CollideBehavior(),
-      DragBehavior(),
+      // DragBehavior(),
     ];
   }
 

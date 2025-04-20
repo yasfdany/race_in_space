@@ -42,16 +42,16 @@ class Asteroids extends Level {
 
   List<Component> _generateAsteroid() {
     return [
-      Asteroid(position: Vector2(-130.25894165039062, -16.188201904296875)),
-      Asteroid(position: Vector2(-94.87071990966797, -34.25872802734375)),
-      Asteroid(position: Vector2(-106.541259765625, 24.84698486328125)),
-      Asteroid(position: Vector2(-68.14125061035156, 1.882354736328125)),
-      Asteroid(position: Vector2(-50.82359313964844, -35.7647705078125)),
-      Asteroid(position: Vector2(-13.176498413085938, 0.0)),
-      Asteroid(position: Vector2(-39.90580749511719, 31.62347412109375)),
-      Asteroid(position: Vector2(127.24703979492188, -9.78826904296875)),
-      Asteroid(position: Vector2(157.36480712890625, -41.411773681640625)),
-      Asteroid(position: Vector2(179.5764617919922, -3.388214111328125)),
+      Asteroid(position: Vector2(-130, -16)),
+      Asteroid(position: Vector2(-94, -34)),
+      Asteroid(position: Vector2(-106, 24)),
+      Asteroid(position: Vector2(-68, 0)),
+      Asteroid(position: Vector2(-50, -34)),
+      Asteroid(position: Vector2(-12, 0)),
+      Asteroid(position: Vector2(-38, 30)),
+      Asteroid(position: Vector2(126, -10)),
+      Asteroid(position: Vector2(156, -42)),
+      Asteroid(position: Vector2(178, -4)),
     ];
   }
 
