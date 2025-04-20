@@ -3,8 +3,8 @@ import 'package:flame/components.dart';
 import 'package:flame_behaviors/flame_behaviors.dart';
 import 'package:flutter/material.dart';
 
-import 'behaviors/drag_behavior.dart';
 import 'behaviors/gravity_behavior.dart';
+import 'planet.dart';
 
 class GravitationArea extends PositionedEntity {
   GravitationArea({
@@ -19,7 +19,6 @@ class GravitationArea extends PositionedEntity {
     return [
       PropagatingCollisionBehavior(CircleHitbox()),
       GravityBehavior(),
-      DragBehavior(),
     ];
   }
 
@@ -38,4 +37,6 @@ class GravitationArea extends PositionedEntity {
       ),
     );
   }
+
+  Planet get planet => parent as Planet;
 }

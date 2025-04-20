@@ -27,6 +27,7 @@ class PullBehavior extends DraggableBehavior<Ship> {
         parent.startPosition.distanceTo(parent.position).clamp(0, 100);
     parent.velocity =
         -(parent.position - parent.startPosition).normalized() * distance * 5;
+
     super.onDragEnd(event);
   }
 }
