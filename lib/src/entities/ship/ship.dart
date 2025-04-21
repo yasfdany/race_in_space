@@ -7,6 +7,7 @@ import 'package:flame_behaviors/flame_behaviors.dart';
 import '../../../main.dart';
 import '../../ui/scenes/game/controllers/game_controller.dart';
 import '../../ui/scenes/game/game_scene.dart';
+import '../trajectory/trajectory.dart';
 import 'behaviors/pull_behavior.dart';
 import 'behaviors/velocity_behavior.dart';
 import 'ship_sprite.dart';
@@ -35,8 +36,15 @@ class Ship extends PositionedEntity with HasGameReference<GameScene> {
   Vector2 velocity = Vector2(0, 0);
   ShipState state = ShipState.idle;
 
-  late final startPosition = position.clone();
+  late final trajectories = [
+    for (var i = 0; i < 10; i++)
+      Trajectory(
+        index: i,
+        position: Vector2.zero(),
+      )
+  ];
 
+  late final startPosition = position.clone();
   @override
   void onLoad() {
     size = Vector2(56, 56);
@@ -44,6 +52,7 @@ class Ship extends PositionedEntity with HasGameReference<GameScene> {
     shipSprite = ShipSprite(
       position: size / 2,
     );
+    addAll(trajectories);
     add(shipSprite);
   }
 
@@ -65,6 +74,7 @@ class Ship extends PositionedEntity with HasGameReference<GameScene> {
 
   void reset() {
     // if (game.overlays.isActive(WinDialog.overlayName)) return;
+    _gameController.state.aimVelocity = Vector2.zero();
     position = _gameController.state.level.startingPos;
     shipSprite.angle = 0;
     velocity = Vector2(0, 0);

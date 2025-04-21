@@ -1,16 +1,16 @@
 import 'dart:math';
 
 import 'package:flame/events.dart';
+import 'package:flame/game.dart';
 import 'package:flame/geometry.dart';
 import 'package:flame_behaviors/flame_behaviors.dart';
-import 'package:flutter/material.dart';
 
 import '../../../../main.dart';
-import '../../../ui/scenes/game/controllers/game_controller.dart';
+import '../../../ui/scenes/game/controllers/game_state.dart';
 import '../ship.dart';
 
 class PullBehavior extends DraggableBehavior<Ship> {
-  final _gameController = locator.get<GameController>();
+  final _gameState = locator.get<GameState>();
 
   @override
   void onDragUpdate(DragUpdateEvent event) {
@@ -21,6 +21,12 @@ class PullBehavior extends DraggableBehavior<Ship> {
     if (direction.length > 0) {
       parent.shipSprite.angle = atan2(-direction.y, -direction.x) + tau / 4;
     }
+
+    double distance =
+        parent.startPosition.distanceTo(parent.position).clamp(0, 100);
+    _gameState.aimVelocity =
+        -(parent.position - parent.startPosition).normalized() * distance * 5;
+
     super.onDragUpdate(event);
   }
 
@@ -32,15 +38,7 @@ class PullBehavior extends DraggableBehavior<Ship> {
         parent.startPosition.distanceTo(parent.position).clamp(0, 100);
     parent.velocity =
         -(parent.position - parent.startPosition).normalized() * distance * 5;
-
-    _gameController.game.world.removeWhere((e) => e is CircleComponent);
-    _gameController.game.world.add(
-      CircleComponent(
-        position: parent.position,
-        radius: 2,
-        paint: Paint()..color = Colors.white,
-      ),
-    );
+    _gameState.aimVelocity = Vector2.zero();
 
     super.onDragEnd(event);
   }

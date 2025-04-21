@@ -1,3 +1,4 @@
+import 'package:flame/game.dart';
 import 'package:flutter/foundation.dart';
 
 import '../../../../entities/level/level.dart';
@@ -24,4 +25,6 @@ class GameState extends ChangeNotifier {
     _solarCollected = value;
     notifyListeners();
   }
+
+  Vector2 aimVelocity = Vector2.zero();
 }
