@@ -1,10 +1,10 @@
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame_behaviors/flame_behaviors.dart';
-import 'package:flutter/material.dart';
 
 import 'behaviors/collide_behavior.dart';
 import 'behaviors/drag_behavior.dart';
+import 'gas_planet.dart';
 import 'gravitation_area.dart';
 
 class Planet extends PositionedEntity {
@@ -33,11 +33,8 @@ class Planet extends PositionedEntity {
       position: size / 2,
       radius: radius * gravityArea,
     ));
-    add(CircleComponent(
-      anchor: Anchor.center,
-      radius: radius,
-      position: size / 2,
-      paint: Paint()..color = Colors.white,
+    add(GasPlanet(
+      size: size,
     ));
   }
 }

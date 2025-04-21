@@ -31,8 +31,8 @@ class GravitationArea extends PositionedEntity {
         position: size / 2,
         radius: radius,
         paint: Paint()
-          ..color = Colors.red.withValues(
-            alpha: 0.2,
+          ..color = Colors.white.withValues(
+            alpha: 0.1,
           ),
       ),
     );

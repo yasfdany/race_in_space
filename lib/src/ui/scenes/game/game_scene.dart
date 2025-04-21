@@ -3,6 +3,7 @@ import 'package:flame/game.dart';
 import 'package:flame_behaviors/flame_behaviors.dart';
 
 import '../../../../main.dart';
+import '../../../entities/nebulae_dust/nebulae_dust_background.dart';
 import 'controllers/game_controller.dart';
 
 class GameScene extends FlameGame with EntityMixin, HasCollisionDetection {
@@ -12,7 +13,8 @@ class GameScene extends FlameGame with EntityMixin, HasCollisionDetection {
   // late double startZoom;
 
   @override
-  void onLoad() {
+  void onLoad() async {
+    add(NebulaeDustBackground());
     camera = CameraComponent.withFixedResolution(
       width: size.x,
       height: size.y,

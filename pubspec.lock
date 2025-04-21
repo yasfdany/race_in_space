@@ -159,7 +159,7 @@ packages:
     source: hosted
     version: "5.9.3"
   flutter_shaders:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: flutter_shaders
       sha256: "34794acadd8275d971e02df03afee3dee0f98dbfb8c4837082ad0034f612a3e2"
