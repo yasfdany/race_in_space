@@ -1,12 +1,14 @@
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame_behaviors/flame_behaviors.dart';
-import 'package:flutter/material.dart';
 
+import '../../ui/scenes/game/game_scene.dart';
 import 'behaviors/gravity_behavior.dart';
+import 'gravitation_bubble.dart';
 import 'planet.dart';
 
-class GravitationArea extends PositionedEntity {
+class GravitationArea extends PositionedEntity
+    with HasGameReference<GameScene> {
   GravitationArea({
     this.radius = 0,
     super.position,
@@ -25,17 +27,10 @@ class GravitationArea extends PositionedEntity {
   @override
   void onLoad() {
     size = Vector2.all(radius * 2);
-    add(
-      CircleComponent(
-        anchor: Anchor.center,
-        position: size / 2,
-        radius: radius,
-        paint: Paint()
-          ..color = Colors.white.withValues(
-            alpha: 0.1,
-          ),
-      ),
-    );
+    add(GravitationBubble(
+      size: size,
+      color: game.background.color,
+    ));
   }
 
   Planet get planet => parent as Planet;

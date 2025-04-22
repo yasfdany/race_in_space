@@ -19,8 +19,8 @@ class GameScene extends FlameGame with EntityMixin, HasCollisionDetection {
 
   @override
   void onLoad() async {
-    add(background);
     add(StarBackground());
+    add(background);
     camera = CameraComponent.withFixedResolution(
       width: size.x,
       height: size.y,

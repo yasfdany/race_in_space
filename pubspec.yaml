@@ -41,6 +41,7 @@ flutter:
     - assets/shaders/nebulae_gas.frag
     - assets/shaders/gas_planet.frag
     - assets/shaders/dry_planet.frag
+    - assets/shaders/gravity_bubble.frag
 
   fonts:
     - family: at01
