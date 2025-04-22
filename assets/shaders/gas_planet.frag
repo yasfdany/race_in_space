@@ -9,6 +9,7 @@ uniform float iTime;
 uniform float seed;
 uniform float size;
 uniform float pixels;
+
 uniform vec4 dustColor;
 uniform vec4 lightColor;
 uniform vec4 midColor;

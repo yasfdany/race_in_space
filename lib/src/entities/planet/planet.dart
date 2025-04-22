@@ -5,9 +5,9 @@ import 'package:flutter/material.dart';
 
 import 'behaviors/collide_behavior.dart';
 import 'behaviors/drag_behavior.dart';
-import 'dry_planet.dart';
-import 'gas_planet.dart';
 import 'gravitation_area.dart';
+import 'shaders/dry_planet_shader.dart';
+import 'shaders/gas_planet_shader.dart';
 
 enum PlanetType {
   gas,
@@ -46,12 +46,12 @@ class Planet extends PositionedEntity {
     ));
     switch (type) {
       case PlanetType.gas:
-        add(GasPlanet(
+        add(GasPlanetShader(
           size: size,
           color: color,
         ));
       case PlanetType.dry:
-        add(DryPlanet(
+        add(DryPlanetShader(
           size: size,
           color: color,
         ));

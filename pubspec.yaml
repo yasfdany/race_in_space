@@ -42,6 +42,7 @@ flutter:
     - assets/shaders/gas_planet.frag
     - assets/shaders/dry_planet.frag
     - assets/shaders/gravity_bubble.frag
+    - assets/shaders/solar.frag
 
   fonts:
     - family: at01

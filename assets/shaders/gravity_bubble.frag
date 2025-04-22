@@ -6,6 +6,7 @@ precision mediump float;
 
 uniform vec2 iResolution;
 uniform float iTime;
+
 uniform vec4 color1;
 uniform vec4 color2;
 uniform vec4 color3;

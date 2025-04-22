@@ -4,8 +4,8 @@ import 'package:flame_behaviors/flame_behaviors.dart';
 
 import '../../ui/scenes/game/game_scene.dart';
 import 'behaviors/gravity_behavior.dart';
-import 'gravitation_bubble.dart';
 import 'planet.dart';
+import 'shaders/gravitation_area_shader.dart';
 
 class GravitationArea extends PositionedEntity
     with HasGameReference<GameScene> {
@@ -27,7 +27,7 @@ class GravitationArea extends PositionedEntity
   @override
   void onLoad() {
     size = Vector2.all(radius * 2);
-    add(GravitationBubble(
+    add(GravitationAreaShader(
       size: size,
       color: game.background.color,
     ));

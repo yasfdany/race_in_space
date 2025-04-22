@@ -9,6 +9,7 @@ uniform float iTime;
 uniform float seed;
 uniform float size;
 uniform float pixels;
+
 uniform vec4 dark;
 uniform vec4 light;
 
@@ -23,33 +24,33 @@ vec4 colorscheme(float x) {
     return mix(dark, light, x);
 }
 
-float rand(vec2 coord, float tilesize) {
+float rand(vec2 coord, float tile_size) {
     if (should_tile == 1.0) {
-        coord = mod(coord / uv_correct, tilesize);
+        coord = mod(coord / uv_correct, tile_size);
     }
     return fract(sin(dot(coord.xy ,vec2(12.9898,78.233))) * (15.5453 + seed));
 }
 
-float noise(vec2 coord, float tilesize) {
+float noise(vec2 coord, float tile_size) {
     vec2 i = floor(coord);
     vec2 f = fract(coord);
 
-    float a = rand(i, tilesize);
-    float b = rand(i + vec2(1.0, 0.0), tilesize);
-    float c = rand(i + vec2(0.0, 1.0), tilesize);
-    float d = rand(i + vec2(1.0, 1.0), tilesize);
+    float a = rand(i, tile_size);
+    float b = rand(i + vec2(1.0, 0.0), tile_size);
+    float c = rand(i + vec2(0.0, 1.0), tile_size);
+    float d = rand(i + vec2(1.0, 1.0), tile_size);
 
     vec2 cubic = f * f * (3.0 - 2.0 * f);
 
     return mix(a, b, cubic.x) + (c - a) * cubic.y * (1.0 - cubic.x) + (d - b) * cubic.x * cubic.y;
 }
 
-float fbm(vec2 coord, float tilesize) {
+float fbm(vec2 coord, float tile_size) {
     float value = 0.0;
     float scale = 0.5;
 
     for(int i = 0; i < octaves; i++) {
-        value += noise(coord, tilesize) * scale;
+        value += noise(coord, tile_size) * scale;
         coord *= 2.0;
         scale *= 0.5;
     }
@@ -60,15 +61,15 @@ bool dither(vec2 uv1, vec2 uv2) {
     return mod(uv1.y+uv2.x,2.0/pixels) <= 1.0 / pixels;
 }
 
-float circleNoise(vec2 uv, float tilesize) {
+float circleNoise(vec2 uv, float tile_size) {
     if (should_tile == 1.0) {
-        uv = mod(uv, tilesize);
+        uv = mod(uv, tile_size);
     }
 
     float uv_y = floor(uv.y);
     uv.x += uv_y*.31;
     vec2 f = fract(uv);
-    float h = rand(vec2(floor(uv.x),floor(uv_y)), tilesize);
+    float h = rand(vec2(floor(uv.x),floor(uv_y)), tile_size);
     float m = (length(f-0.25-(h*0.5)));
     float r = h*0.25;
     return smoothstep(0.0, r, m*0.75);
@@ -81,15 +82,15 @@ vec2 rotate(vec2 vec, float angle) {
     return vec;
 }
 
-float cloud_alpha(vec2 uv, float tilesize) {
+float cloud_alpha(vec2 uv, float tile_size) {
     float c_noise = 0.0;
 
     // more iterations for more turbulence
     int iters = 2;
     for (int i = 0; i < iters; i++) {
-        c_noise += circleNoise(uv * 0.5 + (float(i+1)) + vec2(-0.3, 0.0), ceil(tilesize * 0.5));
+        c_noise += circleNoise(uv * 0.5 + (float(i+1)) + vec2(-0.3, 0.0), ceil(tile_size * 0.5));
     }
-    float fbm = fbm(uv+c_noise, tilesize);
+    float fbm = fbm(uv+c_noise, tile_size);
 
     return fbm;
 }

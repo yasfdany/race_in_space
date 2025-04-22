@@ -4,6 +4,8 @@ import 'package:flame/components.dart';
 import 'package:flame/post_process.dart';
 import 'package:flutter_shaders/flutter_shaders.dart';
 
+import '../../../../main.dart';
+import '../../../config/di/get_it_ext.dart';
 import '../../../utils/helpers/color_helper.dart';
 
 class DryPlanetPostProcess extends PostProcess {
@@ -11,11 +13,11 @@ class DryPlanetPostProcess extends PostProcess {
     required this.baseColor,
   });
   late World world;
-  late final FragmentProgram fragmentProgram;
-  late final FragmentShader shader;
+  late final shader = shaderController.dryPlanetShader;
+  late final colors = ColorHelper.generatePaletteColors(baseColor);
 
   final Color baseColor;
-  late final colors = ColorHelper.generatePaletteColors(baseColor);
+  final shaderController = locator.shaderController;
 
   double time = 0;
 
@@ -26,14 +28,6 @@ class DryPlanetPostProcess extends PostProcess {
   }
 
   @override
-  void onLoad() async {
-    fragmentProgram = await FragmentProgram.fromAsset(
-      'assets/shaders/dry_planet.frag',
-    );
-    shader = fragmentProgram.fragmentShader();
-  }
-
-  @override
   void postProcess(Vector2 size, Canvas canvas) {
     shader.setFloatUniforms((value) {
       value
@@ -41,11 +35,8 @@ class DryPlanetPostProcess extends PostProcess {
         ..setFloat(time * 10) // iTime
         ..setFloat(10.0) // seed
         ..setFloat(10.0) // size
-        ..setFloat(80); // pixels
-
-      for (final color in colors) {
-        value.setColor(color);
-      }
+        ..setFloat(80) // pixels
+        ..setColors(colors); // colors
     });
 
     canvas

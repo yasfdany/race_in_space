@@ -1,25 +1,20 @@
-import 'dart:ui';
-
 import 'package:flame/components.dart';
 import 'package:flame/post_process.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_shaders/flutter_shaders.dart';
 
 import '../../../../main.dart';
 import '../../../config/di/get_it_ext.dart';
 import '../../../utils/helpers/color_helper.dart';
 
-class GasPlanetPostProcess extends PostProcess {
-  GasPlanetPostProcess({
-    required this.baseColor,
-  });
+class SolarPostProcess extends PostProcess {
   late World world;
-  late final shader = shaderController.gasPlanetShader;
+  late final shader = shaderController.solarShader;
   late final colors = ColorHelper.generatePaletteColors(
-    baseColor,
+    Colors.orange,
     count: 4,
   );
 
-  final Color baseColor;
   final shaderController = locator.shaderController;
 
   double time = 0;
@@ -36,10 +31,13 @@ class GasPlanetPostProcess extends PostProcess {
       value
         ..setVector(size) // iResolution
         ..setFloat(time * 2) // iTime
-        ..setFloat(1.0) // seed
-        ..setFloat(30.0) // size
-        ..setFloat(80) // pixels
-        ..setColors(colors); // colors
+        ..setFloat(30) // pixels
+        ..setColors([
+          Color(0xFF662100), // darkColor - Deep reddish-brown
+          Color(0xFFE6400D), // midColor - Fiery orange
+          Color(0xFFFF8C1A), // lightColor - Bright orange
+          Color(0xFFFFC966), // lightestColor - Soft golden glow
+        ]); // colors
     });
 
     canvas
