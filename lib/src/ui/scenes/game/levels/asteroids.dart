@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'dart:ui';
 
 import 'package:flame/components.dart';
 import 'package:flame/geometry.dart';
@@ -20,6 +21,7 @@ class Asteroids extends Level {
           solar: 5,
           world: World(),
           startingPos: Vector2(-(1.sw / 4), 1.sh / 3),
+          spaceColor: Color(0xFF53F3CE),
         );
 
   Planet get _planet {

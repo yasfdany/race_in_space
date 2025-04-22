@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flame/components.dart';
 import 'package:flame/geometry.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../entities/level/level.dart';
@@ -19,6 +20,7 @@ class Gravity extends Level {
           canZoom: false,
           world: World(),
           startingPos: Vector2(0, (1.sh / 3)),
+          spaceColor: Color(0xFF2E3A87),
         );
 
   @override

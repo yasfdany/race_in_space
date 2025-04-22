@@ -13,9 +13,13 @@ class GameScene extends FlameGame with EntityMixin, HasCollisionDetection {
   static const zoomPerScrollUnit = 0.02;
   // late double startZoom;
 
+  late NebulaeGasBackground background = NebulaeGasBackground(
+    color: controller.state.level.spaceColor,
+  );
+
   @override
   void onLoad() async {
-    add(NebulaeGasBackground());
+    add(background);
     add(StarBackground());
     camera = CameraComponent.withFixedResolution(
       width: size.x,

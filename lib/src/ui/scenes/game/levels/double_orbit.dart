@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flame/components.dart';
 import 'package:flame/geometry.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../entities/level/level.dart';
@@ -19,13 +20,16 @@ class DoubleOrbit extends Level {
           solar: 6,
           world: World(),
           startingPos: Vector2(0, (1.sh / 3)),
+          spaceColor: Color(0xFF7C4DFF),
         );
 
   Planet get _planet1 {
     return Planet(
       radius: 40,
       gravityArea: 3,
+      type: PlanetType.gas,
       position: Vector2(0, 40),
+      color: Colors.blue,
     );
   }
 
@@ -33,7 +37,9 @@ class DoubleOrbit extends Level {
     return Planet(
       radius: 30,
       gravityArea: 3,
+      type: PlanetType.dry,
       position: Vector2(74, -264),
+      color: Colors.deepOrange,
     );
   }
 

@@ -4,10 +4,21 @@ import 'package:flame/components.dart';
 import 'package:flame/post_process.dart';
 import 'package:flutter_shaders/flutter_shaders.dart';
 
+import '../../../utils/helpers/color_helper.dart';
+
 class GasPlanetPostProcess extends PostProcess {
+  GasPlanetPostProcess({
+    required this.baseColor,
+  });
   late World world;
   late final FragmentProgram fragmentProgram;
   late final FragmentShader shader;
+
+  final Color baseColor;
+  late final colors = ColorHelper.generatePaletteColors(
+    baseColor,
+    count: 4,
+  );
 
   double time = 0;
 
@@ -28,21 +39,16 @@ class GasPlanetPostProcess extends PostProcess {
   @override
   void postProcess(Vector2 size, Canvas canvas) {
     shader.setFloatUniforms((value) {
-      // uniform vec4 dustColor;
-      // uniform vec4 lightColor;
-      // uniform vec4 midColor;
-      // uniform vec4 darkColor;
-
       value
         ..setVector(size) // iResolution
-        ..setFloat(time) // iTime
+        ..setFloat(time * 2) // iTime
         ..setFloat(1.0) // seed
         ..setFloat(30.0) // size
-        ..setFloat(80) // pixels
-        ..setColor(Color(0xffab5130))
-        ..setColor(Color(0xfff0b541))
-        ..setColor(Color(0xffcf752b))
-        ..setColor(Color(0xffab5130));
+        ..setFloat(80);
+
+      for (final color in colors) {
+        value.setColor(color);
+      }
     });
 
     canvas

@@ -6,9 +6,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_shaders/flutter_shaders.dart';
 
 class NebulaeGasPostProcess extends PostProcess {
+  NebulaeGasPostProcess({
+    required this.color,
+  });
   late World world;
   late final FragmentProgram fragmentProgram;
   late final FragmentShader shader;
+  late final seed = DateTime.now().millisecondsSinceEpoch % 1000.0;
+
+  final Color color;
 
   double time = 0;
 
@@ -32,11 +38,11 @@ class NebulaeGasPostProcess extends PostProcess {
       value
         ..setVector(size) // iResolution
         ..setFloat(time) // iTime
-        ..setFloat(6.0) // seed
+        ..setFloat(seed) // seed
         ..setFloat(20.0) // size
         ..setFloat(400) // pixels
         ..setColor(Colors.black) // dark color
-        ..setColor(Colors.green); // light color
+        ..setColor(color); // light color
     });
 
     canvas

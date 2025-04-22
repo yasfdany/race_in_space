@@ -1,17 +1,26 @@
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame_behaviors/flame_behaviors.dart';
+import 'package:flutter/material.dart';
 
 import 'behaviors/collide_behavior.dart';
 import 'behaviors/drag_behavior.dart';
 import 'dry_planet.dart';
+import 'gas_planet.dart';
 import 'gravitation_area.dart';
+
+enum PlanetType {
+  gas,
+  dry,
+}
 
 class Planet extends PositionedEntity {
   Planet({
     this.radius = 0,
     this.gravityArea = 0,
     super.position,
+    this.color = Colors.grey,
+    this.type = PlanetType.dry,
     super.anchor = Anchor.center,
   }) : super(behaviors: _buildBehaviors);
 
@@ -23,8 +32,10 @@ class Planet extends PositionedEntity {
     ];
   }
 
+  PlanetType type;
   double radius;
   int gravityArea;
+  Color color;
 
   @override
   void onLoad() {
@@ -33,8 +44,17 @@ class Planet extends PositionedEntity {
       position: size / 2,
       radius: radius * gravityArea,
     ));
-    add(DryPlanet(
-      size: size,
-    ));
+    switch (type) {
+      case PlanetType.gas:
+        add(GasPlanet(
+          size: size,
+          color: color,
+        ));
+      case PlanetType.dry:
+        add(DryPlanet(
+          size: size,
+          color: color,
+        ));
+    }
   }
 }

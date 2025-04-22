@@ -8,6 +8,12 @@ uniform float seed;
 uniform float size;
 uniform float pixels;
 
+uniform vec4 lighterColor;
+uniform vec4 lightColor;
+uniform vec4 midColor;
+uniform vec4 darkColor;
+uniform vec4 darkerColor;
+
 // Configuration
 float rotation = 0.0;
 vec2 light_origin = vec2(0.4, 0.6);
@@ -20,11 +26,11 @@ bool should_dither = true;
 
 // Planet colors
 vec4 colors[5] = vec4[5](
-    vec4(1.0, 0.537255, 0.2, 1.0),
-    vec4(0.901961, 0.270588, 0.223529, 1.0),
-    vec4(0.678431, 0.184314, 0.270588, 1.0),
-    vec4(0.321569, 0.2, 0.247059, 1.0),
-    vec4(0.239216, 0.160784, 0.211765, 1.0)
+    lighterColor,
+    lightColor,
+    midColor,
+    darkColor,
+    darkerColor
 );
 
 out vec4 fragColor;

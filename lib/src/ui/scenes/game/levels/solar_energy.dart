@@ -1,4 +1,5 @@
 import 'package:flame/components.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../entities/level/level.dart';
@@ -14,6 +15,7 @@ class SolarEnergy extends Level {
           canZoom: false,
           world: World(),
           startingPos: Vector2(0, (1.sh / 3)),
+          spaceColor: Colors.grey,
         );
 
   @override
