@@ -4,7 +4,7 @@ import 'package:flame_behaviors/flame_behaviors.dart';
 
 import 'behaviors/collide_behavior.dart';
 import 'behaviors/drag_behavior.dart';
-import 'gas_planet.dart';
+import 'dry_planet.dart';
 import 'gravitation_area.dart';
 
 class Planet extends PositionedEntity {
@@ -33,7 +33,7 @@ class Planet extends PositionedEntity {
       position: size / 2,
       radius: radius * gravityArea,
     ));
-    add(GasPlanet(
+    add(DryPlanet(
       size: size,
     ));
   }

@@ -2,10 +2,9 @@ import 'dart:ui';
 
 import 'package:flame/components.dart';
 import 'package:flame/post_process.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_shaders/flutter_shaders.dart';
 
-class NebulaeGasPostProcess extends PostProcess {
+class DryPlanetPostProcess extends PostProcess {
   late World world;
   late final FragmentProgram fragmentProgram;
   late final FragmentShader shader;
@@ -21,7 +20,7 @@ class NebulaeGasPostProcess extends PostProcess {
   @override
   void onLoad() async {
     fragmentProgram = await FragmentProgram.fromAsset(
-      'assets/shaders/nebulae_gas.frag',
+      'assets/shaders/dry_planet.frag',
     );
     shader = fragmentProgram.fragmentShader();
   }
@@ -31,12 +30,10 @@ class NebulaeGasPostProcess extends PostProcess {
     shader.setFloatUniforms((value) {
       value
         ..setVector(size) // iResolution
-        ..setFloat(time) // iTime
-        ..setFloat(6.0) // seed
-        ..setFloat(20.0) // size
-        ..setFloat(400) // pixels
-        ..setColor(Colors.black) // dark color
-        ..setColor(Colors.green); // light color
+        ..setFloat(time * 10) // iTime
+        ..setFloat(10.0) // seed
+        ..setFloat(10.0) // size
+        ..setFloat(80); // pixels
     });
 
     canvas
