@@ -38,7 +38,7 @@ flutter:
   assets:
     - assets/images/
   shaders:
-    - assets/shaders/nebulae_dust.frag
+    - assets/shaders/nebulae_gas.frag
     - assets/shaders/gas_planet.frag
 
   fonts:

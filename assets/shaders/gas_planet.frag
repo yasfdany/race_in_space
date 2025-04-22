@@ -9,6 +9,10 @@ uniform float iTime;
 uniform float seed;
 uniform float size;
 uniform float pixels;
+uniform vec4 dustColor;
+uniform vec4 lightColor;
+uniform vec4 midColor;
+uniform vec4 darkColor;
 
 float cloud_cover = 0.5;
 vec2 light_origin = vec2(0.4, 0.6);
@@ -22,10 +26,10 @@ int octaves = 2;
 
 // Colors array - converted to Shadertoy's style
 vec4 colors[4] = vec4[](
-    vec4(0.9, 0.9, 0.9, 1.0),    // colors[3]
-    vec4(0.8, 0.8, 0.8, 1.0),   // colors[2]
-    vec4(0.7, 0.7, 0.7, 1.0),   // colors[1]
-    vec4(0.6, 0.6, 0.6, 1.0)   // colors[0]
+    dustColor,
+    lightColor,
+    midColor,
+    darkColor
 );
 
 out vec4 fragColor;

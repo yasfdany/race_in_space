@@ -9,6 +9,9 @@ uniform float iTime;
 uniform float seed;
 uniform float size;
 uniform float pixels;
+uniform vec4 dark;
+uniform vec4 light;
+
 int octaves = 5;
 float should_tile = 1.0;
 float reduce_background = 0.0;
@@ -16,10 +19,7 @@ vec2 uv_correct = vec2(1.0);
 
 out vec4 fragColor;
 
-vec3 colorscheme(float x) {
-    // Example: warm dust colors
-    vec3 dark = vec3(0.0, 0.0, 0.1);
-    vec3 light = vec3(0.0, 1.0, 1.0);
+vec4 colorscheme(float x) {
     return mix(dark, light, x);
 }
 
@@ -128,7 +128,7 @@ void main() {
     }
 
     float col_value = floor(n_dust_lerp) / 7.0;
-    vec3 col = colorscheme(col_value);
+    vec4 col = colorscheme(col_value);
 
-    fragColor = vec4(col, a_dust);
+    fragColor = vec4(col.xyz, a_dust);
 }

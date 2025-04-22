@@ -3,7 +3,8 @@ import 'package:flame/game.dart';
 import 'package:flame_behaviors/flame_behaviors.dart';
 
 import '../../../../main.dart';
-import '../../../entities/nebulae_dust/nebulae_dust_background.dart';
+import '../../../entities/nebulae_gas/nebulae_gas_background.dart';
+import '../../../entities/star/star_background.dart';
 import 'controllers/game_controller.dart';
 
 class GameScene extends FlameGame with EntityMixin, HasCollisionDetection {
@@ -14,7 +15,8 @@ class GameScene extends FlameGame with EntityMixin, HasCollisionDetection {
 
   @override
   void onLoad() async {
-    add(NebulaeDustBackground());
+    add(NebulaeGasBackground());
+    add(StarBackground());
     camera = CameraComponent.withFixedResolution(
       width: size.x,
       height: size.y,

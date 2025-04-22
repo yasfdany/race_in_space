@@ -2,11 +2,11 @@ import 'package:flame/components.dart';
 import 'package:flame/post_process.dart';
 
 import '../../ui/scenes/game/game_scene.dart';
-import 'post_process/nebulae_post_process.dart';
+import 'post_process/nebulae_gas_process.dart';
 
-class NebulaeDustBackground extends PostProcessComponent<NebulaePostProcess>
+class NebulaeGasBackground extends PostProcessComponent<NebulaeGasPostProcess>
     with HasGameReference<GameScene> {
-  NebulaeDustBackground() : super(postProcess: NebulaePostProcess());
+  NebulaeGasBackground() : super(postProcess: NebulaeGasPostProcess());
 
   @override
   Future<void> onLoad() async {

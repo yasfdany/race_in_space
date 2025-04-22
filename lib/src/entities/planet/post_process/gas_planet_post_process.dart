@@ -28,12 +28,21 @@ class GasPlanetPostProcess extends PostProcess {
   @override
   void postProcess(Vector2 size, Canvas canvas) {
     shader.setFloatUniforms((value) {
+      // uniform vec4 dustColor;
+      // uniform vec4 lightColor;
+      // uniform vec4 midColor;
+      // uniform vec4 darkColor;
+
       value
         ..setVector(size) // iResolution
         ..setFloat(time) // iTime
         ..setFloat(1.0) // seed
-        ..setFloat(20.0) // size
-        ..setFloat(76); // pixels
+        ..setFloat(30.0) // size
+        ..setFloat(80) // pixels
+        ..setColor(Color(0xffab5130))
+        ..setColor(Color(0xfff0b541))
+        ..setColor(Color(0xffcf752b))
+        ..setColor(Color(0xffab5130));
     });
 
     canvas

@@ -2,9 +2,10 @@ import 'dart:ui';
 
 import 'package:flame/components.dart';
 import 'package:flame/post_process.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_shaders/flutter_shaders.dart';
 
-class NebulaePostProcess extends PostProcess {
+class NebulaeGasPostProcess extends PostProcess {
   late World world;
   late final FragmentProgram fragmentProgram;
   late final FragmentShader shader;
@@ -33,7 +34,9 @@ class NebulaePostProcess extends PostProcess {
         ..setFloat(time) // iTime
         ..setFloat(6.0) // seed
         ..setFloat(20.0) // size
-        ..setFloat(300); // pixels
+        ..setFloat(400) // pixels
+        ..setColor(Colors.black) // dark color
+        ..setColor(Colors.green); // light color
     });
 
     canvas
