@@ -12,7 +12,7 @@ class AssetsController {
 
   late Image rocket;
   late Image finish;
-  late Image asteroid;
+  late Image asteroids;
   late Image stars;
   late Image bigStars;
 
@@ -23,8 +23,8 @@ class AssetsController {
     finish = await Flame.images.load(
       AssetImages.finish.fileName,
     );
-    asteroid = await Flame.images.load(
-      AssetImages.asteroid.fileName,
+    asteroids = await Flame.images.load(
+      AssetImages.asteroids.fileName,
     );
     stars = await Flame.images.load(
       AssetImages.stars.fileName,

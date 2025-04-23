@@ -21,6 +21,9 @@ class GravitationAreaShader extends PostProcessComponent<BubblePostProcess>
   @override
   Future<void> onLoad() async {
     postProcess.world = game.world;
+    anchor = Anchor.center;
+    scale = Vector2.all(1.24);
+    position = size / 2;
     await super.onLoad();
   }
 }

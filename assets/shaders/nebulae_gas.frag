@@ -1,6 +1,6 @@
 #version 460 core
 
-precision mediump float;
+precision highp float;
 
 #include <flutter/runtime_effect.glsl>
 
@@ -13,7 +13,7 @@ uniform float pixels;
 uniform vec4 dark;
 uniform vec4 light;
 
-int octaves = 5;
+const int octaves = 5;
 float should_tile = 1.0;
 float reduce_background = 0.0;
 vec2 uv_correct = vec2(1.0);
@@ -86,7 +86,7 @@ float cloud_alpha(vec2 uv, float tile_size) {
     float c_noise = 0.0;
 
     // more iterations for more turbulence
-    int iters = 2;
+    const int iters = 2;
     for (int i = 0; i < iters; i++) {
         c_noise += circleNoise(uv * 0.5 + (float(i+1)) + vec2(-0.3, 0.0), ceil(tile_size * 0.5));
     }

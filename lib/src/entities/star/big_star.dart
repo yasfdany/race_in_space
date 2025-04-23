@@ -15,12 +15,12 @@ class BigStar extends SpriteComponent with HasGameReference {
   @override
   void onLoad() {
     anchor = Anchor.center;
-    final variation = RandomHelper.randomRangeInt(
+    final variation = RandomHelper.rangeInt(
       min: 0,
       max: 24,
     );
     size = Vector2.all(25);
-    scale = Vector2.all(RandomHelper.randomRangeDouble(
+    scale = Vector2.all(RandomHelper.rangeDouble(
       min: 1,
       max: 2,
     ));
@@ -52,11 +52,11 @@ class BigStar extends SpriteComponent with HasGameReference {
 
   Vector2 randomPosition() {
     return Vector2(
-      RandomHelper.randomRangeDouble(
+      RandomHelper.rangeDouble(
         min: 0,
         max: game.size.x,
       ),
-      RandomHelper.randomRangeDouble(
+      RandomHelper.rangeDouble(
         min: -game.size.y,
         max: 0,
       ),

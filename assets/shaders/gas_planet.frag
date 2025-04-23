@@ -1,6 +1,6 @@
 #version 460 core
 
-precision mediump float;
+precision highp float;
 
 #include <flutter/runtime_effect.glsl>
 
@@ -23,15 +23,15 @@ float cloud_curve = 1.0;
 float light_border_1 = 0.42;
 float light_border_2 = 0.62;
 float rotation = 9.0;
-int octaves = 2;
+const int octaves = 2;
 
 // Colors array - converted to Shadertoy's style
-vec4 colors[4] = vec4[](
+vec4 colors[] = {
     dustColor,
     lightColor,
     midColor,
     darkColor
-);
+};
 
 out vec4 fragColor;
 

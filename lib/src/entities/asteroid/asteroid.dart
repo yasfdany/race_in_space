@@ -4,7 +4,9 @@ import 'package:flame_behaviors/flame_behaviors.dart';
 
 import '../../../main.dart';
 import '../../config/di/get_it_ext.dart';
+import '../../utils/helpers/random_helper.dart';
 import 'behaviors/collide_behavior.dart';
+import 'behaviors/floaty_behavior.dart';
 
 class Asteroid extends PositionedEntity {
   Asteroid({
@@ -18,6 +20,7 @@ class Asteroid extends PositionedEntity {
     return [
       PropagatingCollisionBehavior(CircleHitbox()),
       CollideBehavior(),
+      FloatyBehavior(),
       // DragBehavior(),
     ];
   }
@@ -26,11 +29,19 @@ class Asteroid extends PositionedEntity {
   void onLoad() {
     anchor = Anchor.center;
     size = Vector2.all(40);
+    final variant = RandomHelper.rangeInt(
+      min: 0,
+      max: 15,
+    );
     add(SpriteComponent(
-      size: size,
+      size: size * RandomHelper.rangeDouble(min: 1.9, max: 2.2),
       anchor: Anchor.center,
       position: size / 2,
-      sprite: Sprite(assetsController.asteroid),
+      sprite: Sprite(
+        assetsController.asteroids,
+        srcPosition: Vector2(100.0 * variant, 0),
+        srcSize: Vector2.all(100.0),
+      ),
     ));
   }
 }

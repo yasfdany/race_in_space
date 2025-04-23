@@ -1,6 +1,6 @@
 #version 460 core
 
-precision mediump float;
+precision highp float;
 
 #include <flutter/runtime_effect.glsl>
 
@@ -23,17 +23,17 @@ float light_dist1 = 0.362;
 float light_dist2 = 0.525;
 float time_speed = 0.1;
 float dither_size = 2.0;
-int octaves = 3;
+const int octaves = 3;
 bool should_dither = true;
 
 // Planet colors
-vec4 colors[5] = vec4[5](
-    lighterColor,
-    lightColor,
-    midColor,
-    darkColor,
+vec4 colors[] = {
+    lighterColor, 
+    lightColor, 
+    midColor, 
+    darkColor, 
     darkerColor
-);
+};
 
 out vec4 fragColor;
 

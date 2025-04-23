@@ -4,7 +4,9 @@ import 'package:flame_behaviors/flame_behaviors.dart';
 import 'package:flutter/material.dart';
 
 import '../../ui/scenes/game/game_scene.dart';
+import '../../utils/helpers/random_helper.dart';
 import 'behaviors/collect_behavior.dart';
+import 'behaviors/floaty_behavior.dart';
 import 'shaders/solar_shader.dart';
 
 class Solar extends PositionedEntity with HasGameReference<GameScene> {
@@ -14,20 +16,27 @@ class Solar extends PositionedEntity with HasGameReference<GameScene> {
   }) : super(behaviors: _buildBehaviors);
 
   final _lightSource = Paint()
-    ..color = Colors.deepOrange
-    ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 4);
+    ..color = Colors.deepOrange.withValues(alpha: 0.8)
+    ..maskFilter = MaskFilter.blur(
+      BlurStyle.normal,
+      RandomHelper.rangeDouble(
+        min: 5,
+        max: 8,
+      ),
+    );
 
   static List<Behavior<EntityMixin>> get _buildBehaviors {
     return [
       PropagatingCollisionBehavior(CircleHitbox()),
       CollectBehavior(),
+      FloatyBehavior()
     ];
   }
 
   @override
   void onLoad() {
     anchor = Anchor.center;
-    size = Vector2.all(18);
+    size = Vector2.all(20);
     add(SolarShader(size: size));
   }
 

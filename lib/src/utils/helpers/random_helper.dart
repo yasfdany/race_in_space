@@ -7,11 +7,11 @@ class RandomHelper {
     return random.nextDouble() < chance;
   }
 
-  static double randomRangeDouble({double min = 0, double max = 1}) {
+  static double rangeDouble({double min = 0, double max = 1}) {
     return random.nextDouble() * (max - min) + min;
   }
 
-  static int randomRangeInt({int min = 0, int max = 1}) {
+  static int rangeInt({int min = 0, int max = 1}) {
     return random.nextInt(max - min) + min;
   }
 

@@ -4,6 +4,7 @@ import 'package:flame/game.dart';
 import 'package:flame_behaviors/flame_behaviors.dart';
 
 import '../solar.dart';
+import 'floaty_behavior.dart';
 
 class SatelliteBehavior extends Behavior<Solar> {
   Vector2 center;
@@ -12,6 +13,12 @@ class SatelliteBehavior extends Behavior<Solar> {
     required this.center,
     required this.radius,
   });
+
+  @override
+  void onMount() {
+    super.onMount();
+    parent.findBehavior<FloatyBehavior>().removeFromParent();
+  }
 
   @override
   void update(double dt) {

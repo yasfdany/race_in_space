@@ -37,6 +37,7 @@ flutter:
   uses-material-design: true
   assets:
     - assets/images/
+    
   shaders:
     - assets/shaders/nebulae_gas.frag
     - assets/shaders/gas_planet.frag

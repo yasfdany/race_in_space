@@ -23,7 +23,7 @@ class SolarEnergy extends Level {
     return World(children: [
       ...List.generate(
         solar,
-        (i) => Solar(position: Vector2(0, (i * 40) - 100)),
+        (i) => Solar(position: Vector2(0, (i * 50) - 100)),
       ),
       Ship(position: startingPos),
     ]);
