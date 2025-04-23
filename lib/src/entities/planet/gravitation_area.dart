@@ -1,5 +1,6 @@
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
+import 'package:flame/extensions.dart';
 import 'package:flame_behaviors/flame_behaviors.dart';
 
 import '../../ui/scenes/game/game_scene.dart';
@@ -29,7 +30,7 @@ class GravitationArea extends PositionedEntity
     size = Vector2.all(radius * 2);
     add(GravitationAreaShader(
       size: size,
-      color: game.background.color,
+      color: game.background.color.darken(0.8),
     ));
   }
 

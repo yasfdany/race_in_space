@@ -15,7 +15,7 @@ class SolarEnergy extends Level {
           canZoom: false,
           world: World(),
           startingPos: Vector2(0, (1.sh / 3)),
-          spaceColor: Colors.grey,
+          spaceColor: Colors.indigo,
         );
 
   @override

@@ -73,7 +73,9 @@ class Ship extends PositionedEntity with HasGameReference<GameScene> {
   }
 
   void reset() {
-    // if (game.overlays.isActive(WinDialog.overlayName)) return;
+    shipSprite.exhaust.animationTicker?.reset();
+    shipSprite.exhaust.playing = false;
+
     _gameController.state.aimVelocity = Vector2.zero();
     position = _gameController.state.level.startingPos;
     shipSprite.angle = 0;

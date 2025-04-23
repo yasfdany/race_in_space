@@ -7,6 +7,7 @@ import 'package:flutter_shaders/flutter_shaders.dart';
 import '../../../../main.dart';
 import '../../../config/di/get_it_ext.dart';
 import '../../../utils/helpers/color_helper.dart';
+import '../../../utils/helpers/random_helper.dart';
 
 class DryPlanetPostProcess extends PostProcess {
   DryPlanetPostProcess({
@@ -18,6 +19,7 @@ class DryPlanetPostProcess extends PostProcess {
 
   final Color baseColor;
   final shaderController = locator.shaderController;
+  final seed = RandomHelper.rangeDouble(min: 1.0, max: 10.0);
 
   double time = 0;
 
@@ -33,7 +35,7 @@ class DryPlanetPostProcess extends PostProcess {
       value
         ..setVector(size) // iResolution
         ..setFloat(time * 10) // iTime
-        ..setFloat(10.0) // seed
+        ..setFloat(seed) // seed
         ..setFloat(10.0) // size
         ..setFloat(80) // pixels
         ..setColors(colors); // colors

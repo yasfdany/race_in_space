@@ -4,6 +4,7 @@ import 'package:flame_behaviors/flame_behaviors.dart';
 
 import '../../../main.dart';
 import '../../config/di/get_it_ext.dart';
+import 'exhaust.dart';
 import 'ship.dart';
 
 class ShipSprite extends PositionedEntity {
@@ -22,14 +23,14 @@ class ShipSprite extends PositionedEntity {
     ];
   }
 
-  late SpriteComponent spriteComponent;
-
   final assetsController = locator.assetsController;
+
+  late final Exhaust exhaust;
 
   @override
   void onLoad() {
     size = Vector2(56, 56);
-    spriteComponent = SpriteComponent(
+    final sprite = SpriteComponent(
       sprite: Sprite(
         assetsController.rocket,
       ),
@@ -37,7 +38,12 @@ class ShipSprite extends PositionedEntity {
       anchor: Anchor.center,
       position: size / 2,
     );
-    add(spriteComponent);
+    exhaust = Exhaust(
+      position: Vector2(size.x / 2, size.y),
+    );
+
+    add(exhaust);
+    add(sprite);
   }
 
   Ship get ship => parent as Ship;

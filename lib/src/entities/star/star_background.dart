@@ -7,7 +7,7 @@ import 'small_star.dart';
 
 class StarBackground extends PositionComponent
     with HasGameReference<GameScene> {
-  late final smallStars = List.generate(20, (i) {
+  late final smallStars = List.generate(30, (i) {
     final x = RandomHelper.rangeDouble(
       min: 0,
       max: game.size.x,
@@ -18,7 +18,7 @@ class StarBackground extends PositionComponent
     );
     return SmallStar(position: Vector2(x, y));
   });
-  late final bigStars = List.generate(5, (i) {
+  late final bigStars = List.generate(10, (i) {
     final x = RandomHelper.rangeDouble(
       min: 0,
       max: game.size.x,

@@ -1,8 +1,8 @@
 import 'dart:math';
-import 'dart:ui';
 
 import 'package:flame/components.dart';
 import 'package:flame/geometry.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../entities/asteroid/asteroid.dart';
@@ -29,6 +29,7 @@ class Asteroids extends Level {
       radius: 40,
       gravityArea: 3,
       position: Vector2((1.sw / 2) - 160, -160),
+      color: Color(0xff4FD1B3),
     );
   }
 

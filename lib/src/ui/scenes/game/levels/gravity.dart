@@ -30,6 +30,7 @@ class Gravity extends Level {
         radius: 40,
         gravityArea: 3,
         position: Vector2.zero(),
+        color: Color(0xffFF7043),
       ),
       ..._generateSolarSatellite(),
       Ship(position: startingPos),

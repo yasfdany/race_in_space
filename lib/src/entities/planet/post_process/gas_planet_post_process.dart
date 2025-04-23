@@ -7,6 +7,7 @@ import 'package:flutter_shaders/flutter_shaders.dart';
 import '../../../../main.dart';
 import '../../../config/di/get_it_ext.dart';
 import '../../../utils/helpers/color_helper.dart';
+import '../../../utils/helpers/random_helper.dart';
 
 class GasPlanetPostProcess extends PostProcess {
   GasPlanetPostProcess({
@@ -21,6 +22,7 @@ class GasPlanetPostProcess extends PostProcess {
 
   final Color baseColor;
   final shaderController = locator.shaderController;
+  final seed = RandomHelper.rangeDouble(min: 1.0, max: 10.0);
 
   double time = 0;
 
@@ -36,7 +38,7 @@ class GasPlanetPostProcess extends PostProcess {
       value
         ..setVector(size) // iResolution
         ..setFloat(time * 2) // iTime
-        ..setFloat(1.0) // seed
+        ..setFloat(seed) // seed
         ..setFloat(30.0) // size
         ..setFloat(80) // pixels
         ..setColors(colors); // colors
