@@ -25,14 +25,6 @@ float light_border_2 = 0.62;
 float rotation = 9.0;
 const int octaves = 2;
 
-// Colors array - converted to Shadertoy's style
-vec4 colors[] = {
-    dustColor,
-    lightColor,
-    midColor,
-    darkColor
-};
-
 out vec4 fragColor;
 
 // Noise functions
@@ -106,6 +98,12 @@ vec2 rotate(vec2 coord, float angle){
 }
 
 void main() {
+    vec4 colors[4];
+    colors[0] = dustColor;
+    colors[1] = lightColor;
+    colors[2] = midColor;
+    colors[3] = darkColor;
+    
     vec2 uv = FlutterFragCoord().xy / iResolution;
     uv.x *= iResolution.x / iResolution.y;
     uv.y = 1.0 - uv.y;

@@ -3,13 +3,13 @@ import 'dart:math';
 import 'package:flame/components.dart';
 import 'package:flame/geometry.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../entities/asteroid/asteroid.dart';
 import '../../../../entities/level/level.dart';
 import '../../../../entities/planet/planet.dart';
 import '../../../../entities/ship/ship.dart';
 import '../../../../entities/solar/solar.dart';
+import '../../../../entities/star/star_background.dart';
 
 class Asteroids extends Level {
   Asteroids()
@@ -20,7 +20,7 @@ class Asteroids extends Level {
           canZoom: false,
           solar: 5,
           world: World(),
-          startingPos: Vector2(-(1.sw / 4), 1.sh / 3),
+          startingPos: Vector2(-80, 280),
           spaceColor: Color.fromARGB(255, 22, 139, 112),
         );
 
@@ -28,7 +28,7 @@ class Asteroids extends Level {
     return Planet(
       radius: 40,
       gravityArea: 3,
-      position: Vector2((1.sw / 2) - 160, -160),
+      position: Vector2(42, -164),
       color: Color(0xff4FD1B3),
     );
   }
@@ -36,6 +36,8 @@ class Asteroids extends Level {
   @override
   World get world {
     return World(children: [
+      background,
+      StarBackground(),
       _planet,
       ..._generateSolarEnergy(),
       Ship(position: startingPos),

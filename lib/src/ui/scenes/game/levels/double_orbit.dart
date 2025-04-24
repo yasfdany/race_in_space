@@ -3,12 +3,12 @@ import 'dart:math';
 import 'package:flame/components.dart';
 import 'package:flame/geometry.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../entities/level/level.dart';
 import '../../../../entities/planet/planet.dart';
 import '../../../../entities/ship/ship.dart';
 import '../../../../entities/solar/solar.dart';
+import '../../../../entities/star/star_background.dart';
 
 class DoubleOrbit extends Level {
   DoubleOrbit()
@@ -19,7 +19,7 @@ class DoubleOrbit extends Level {
           canZoom: false,
           solar: 6,
           world: World(),
-          startingPos: Vector2(0, (1.sh / 3)),
+          startingPos: Vector2(0, 280),
           spaceColor: Color(0xFF7C4DFF),
         );
 
@@ -46,6 +46,8 @@ class DoubleOrbit extends Level {
   @override
   World get world {
     return World(children: [
+      background,
+      StarBackground(),
       _planet1,
       _planet2,
       ..._generatePlanetSolar1(),

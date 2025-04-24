@@ -1,10 +1,10 @@
 import 'package:flame/components.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../entities/level/level.dart';
 import '../../../../entities/ship/ship.dart';
 import '../../../../entities/solar/solar.dart';
+import '../../../../entities/star/star_background.dart';
 
 class SolarEnergy extends Level {
   SolarEnergy()
@@ -14,13 +14,15 @@ class SolarEnergy extends Level {
           zoom: 1,
           canZoom: false,
           world: World(),
-          startingPos: Vector2(0, (1.sh / 3)),
+          startingPos: Vector2(0, 280),
           spaceColor: Colors.indigo,
         );
 
   @override
   World get world {
     return World(children: [
+      background,
+      StarBackground(),
       ...List.generate(
         solar,
         (i) => Solar(

@@ -33,6 +33,7 @@ class StarBackground extends PositionComponent
   @override
   void onLoad() {
     size = game.size;
+    position = -size / 2;
     addAll(smallStars);
     addAll(bigStars);
   }

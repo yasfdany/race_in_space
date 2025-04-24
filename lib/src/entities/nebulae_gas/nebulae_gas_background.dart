@@ -20,6 +20,7 @@ class NebulaeGasBackground extends PostProcessComponent<NebulaeGasPostProcess>
   @override
   Future<void> onLoad() async {
     size = game.size;
+    position = -size / 2;
     postProcess.world = game.world;
     await super.onLoad();
   }

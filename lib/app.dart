@@ -1,11 +1,48 @@
+import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:oktoast/oktoast.dart';
 
+import 'main.dart';
+import 'src/config/di/get_it_ext.dart';
 import 'src/config/route/router_controller.dart';
 
-class App extends StatelessWidget {
+class App extends StatefulWidget {
   const App({super.key});
+
+  @override
+  State<App> createState() => _AppState();
+}
+
+class _AppState extends State<App> with WidgetsBindingObserver {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+    locator.audioController.init();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    switch (state) {
+      case AppLifecycleState.resumed:
+        FlameAudio.bgm.resume();
+      case AppLifecycleState.paused:
+        FlameAudio.bgm.pause();
+      case AppLifecycleState.inactive:
+        FlameAudio.bgm.pause();
+      case AppLifecycleState.detached:
+        break;
+      case AppLifecycleState.hidden:
+        break;
+    }
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {

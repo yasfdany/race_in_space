@@ -1,6 +1,8 @@
 import 'package:flame/components.dart';
 import 'package:flutter/material.dart';
 
+import '../nebulae_gas/nebulae_gas_background.dart';
+
 class Level {
   String name;
   int level;
@@ -25,4 +27,8 @@ class Level {
     this.zoom = 1,
     this.canZoom = true,
   });
+
+  late NebulaeGasBackground background = NebulaeGasBackground(
+    color: spaceColor,
+  );
 }

@@ -40,7 +40,7 @@ class GasPlanetPostProcess extends PostProcess {
         ..setFloat(time * 2) // iTime
         ..setFloat(seed) // seed
         ..setFloat(30.0) // size
-        ..setFloat(80) // pixels
+        ..setFloat(60) // pixels
         ..setColors(colors); // colors
     });
 

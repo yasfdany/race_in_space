@@ -5,6 +5,7 @@ import 'package:flame_behaviors/flame_behaviors.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../main.dart';
+import '../../../config/di/get_it_ext.dart';
 import '../../../ui/scenes/game/controllers/game_controller.dart';
 import '../../../ui/scenes/game/ui/win_dialog.dart';
 import '../../ship/ship_sprite.dart';
@@ -14,12 +15,18 @@ class CollectBehavior extends CollisionBehavior<ShipSprite, Solar> {
   late final gameController = locator.get<GameController>();
   late final state = gameController.state;
 
+  final audioController = locator.audioController;
+
   @override
   void onCollisionStart(
     Set<Vector2> intersectionPoints,
     ShipSprite other,
   ) async {
     if (parent.collected) return;
+    audioController.playCollect(
+      parent.position,
+      1 + (state.solarCollected / 10),
+    );
     parent.collected = true;
 
     super.onCollisionStart(intersectionPoints, other);

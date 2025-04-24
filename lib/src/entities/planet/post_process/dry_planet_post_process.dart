@@ -37,7 +37,7 @@ class DryPlanetPostProcess extends PostProcess {
         ..setFloat(time * 10) // iTime
         ..setFloat(seed) // seed
         ..setFloat(10.0) // size
-        ..setFloat(80) // pixels
+        ..setFloat(60) // pixels
         ..setColors(colors); // colors
     });
 

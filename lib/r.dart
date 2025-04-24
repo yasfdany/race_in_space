@@ -5,4 +5,5 @@ class AssetImages {
   static const String rocket = 'assets/images/rocket.png';
   static const String stars = 'assets/images/stars.png';
   static const String exhaust = 'assets/images/exhaust.png';
+  static const String explosion = 'assets/images/explosion.png';
 }

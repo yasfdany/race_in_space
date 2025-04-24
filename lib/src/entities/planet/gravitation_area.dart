@@ -4,6 +4,8 @@ import 'package:flame/extensions.dart';
 import 'package:flame/geometry.dart';
 import 'package:flame_behaviors/flame_behaviors.dart';
 
+import '../../../main.dart';
+import '../../ui/scenes/game/controllers/game_controller.dart';
 import '../../ui/scenes/game/game_scene.dart';
 import '../../utils/helpers/random_helper.dart';
 import 'behaviors/gravity_behavior.dart';
@@ -18,6 +20,7 @@ class GravitationArea extends PositionedEntity
     super.anchor = Anchor.center,
   }) : super(behaviors: _buildBehaviors);
 
+  late final controller = locator.get<GameController>();
   double radius;
 
   static List<Behavior<EntityMixin>> get _buildBehaviors {
@@ -36,7 +39,7 @@ class GravitationArea extends PositionedEntity
     );
     add(GravitationAreaShader(
       size: size,
-      color: game.background.color.darken(0.8),
+      color: controller.state.level.background.color.darken(0.8),
     ));
   }
 

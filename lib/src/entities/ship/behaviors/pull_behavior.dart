@@ -6,11 +6,13 @@ import 'package:flame/geometry.dart';
 import 'package:flame_behaviors/flame_behaviors.dart';
 
 import '../../../../main.dart';
+import '../../../config/di/get_it_ext.dart';
 import '../../../ui/scenes/game/controllers/game_state.dart';
 import '../ship.dart';
 
 class PullBehavior extends DraggableBehavior<Ship> {
-  final _gameState = locator.get<GameState>();
+  final gameState = locator.get<GameState>();
+  final audioController = locator.audioController;
 
   @override
   void onDragUpdate(DragUpdateEvent event) {
@@ -24,7 +26,7 @@ class PullBehavior extends DraggableBehavior<Ship> {
 
     final distance =
         parent.startPosition.distanceTo(parent.position).clamp(0.0, 100.0);
-    _gameState.aimVelocity =
+    gameState.aimVelocity =
         -(parent.position - parent.startPosition).normalized() * distance * 5;
 
     super.onDragUpdate(event);
@@ -33,12 +35,15 @@ class PullBehavior extends DraggableBehavior<Ship> {
   @override
   void onDragEnd(DragEndEvent event) {
     if (parent.state == ShipState.moving) return;
+    audioController.playRocketLaunch();
+    audioController.playCombust();
+
     parent.state = ShipState.moving;
     final distance =
         parent.startPosition.distanceTo(parent.position).clamp(0.0, 100.0);
     parent.velocity =
         -(parent.position - parent.startPosition).normalized() * distance * 5;
-    _gameState.aimVelocity = Vector2.zero();
+    gameState.aimVelocity = Vector2.zero();
     parent.shipSprite.exhaust.playing = true;
     parent.shipSprite.exhaust.scale = Vector2.all(
       (parent.velocity.y / 200).abs().clamp(0, 1.2),

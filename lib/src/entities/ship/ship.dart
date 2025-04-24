@@ -7,6 +7,7 @@ import 'package:flame_behaviors/flame_behaviors.dart';
 import 'package:flutter/material.dart';
 
 import '../../../main.dart';
+import '../../config/di/get_it_ext.dart';
 import '../../ui/scenes/game/controllers/game_controller.dart';
 import '../../ui/scenes/game/game_scene.dart';
 import '../solar/solar.dart';
@@ -32,7 +33,8 @@ class Ship extends PositionedEntity with HasGameReference<GameScene> {
     ];
   }
 
-  late final _gameController = locator.get<GameController>();
+  late final gameController = locator.get<GameController>();
+  final audioController = locator.audioController;
 
   late ShipSprite shipSprite;
 
@@ -81,9 +83,10 @@ class Ship extends PositionedEntity with HasGameReference<GameScene> {
   }
 
   void reset() {
-    _gameController.state.aimVelocity = Vector2.zero();
+    audioController.stopCombust();
+    gameController.state.aimVelocity = Vector2.zero();
 
-    position = _gameController.state.level.startingPos;
+    position = gameController.state.level.startingPos;
     position.y = (game.size.y / 2) + 100;
 
     animateShipAppear(delay: false, initial: false);
@@ -101,9 +104,9 @@ class Ship extends PositionedEntity with HasGameReference<GameScene> {
     if (isWin && !initial) return;
 
     add(MoveEffect.to(
-      _gameController.state.level.startingPos,
+      gameController.state.level.startingPos,
       EffectController(
-        startDelay: delay ? _gameController.state.level.solar * 0.1 : 0,
+        startDelay: delay ? gameController.state.level.solar * 0.1 : 0,
         duration: 1,
         curve: Curves.fastOutSlowIn,
       ),

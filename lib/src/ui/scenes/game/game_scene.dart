@@ -3,8 +3,6 @@ import 'package:flame/game.dart';
 import 'package:flame_behaviors/flame_behaviors.dart';
 
 import '../../../../main.dart';
-import '../../../entities/nebulae_gas/nebulae_gas_background.dart';
-import '../../../entities/star/star_background.dart';
 import '../../../resources/app_text_styles.dart';
 import 'controllers/game_controller.dart';
 
@@ -14,14 +12,8 @@ class GameScene extends FlameGame with EntityMixin, HasCollisionDetection {
   static const zoomPerScrollUnit = 0.02;
   // late double startZoom;
 
-  late NebulaeGasBackground background = NebulaeGasBackground(
-    color: controller.state.level.spaceColor,
-  );
-
   @override
   void onLoad() async {
-    add(StarBackground());
-    add(background);
     camera = CameraComponent.withFixedResolution(
       width: size.x,
       height: size.y,

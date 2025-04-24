@@ -7,6 +7,6 @@ class DragBehavior extends DraggableBehavior<Planet> {
   @override
   void onDragUpdate(DragUpdateEvent event) {
     parent.position.add(event.localDelta);
-    // print(parent.position);
+    print(parent.position);
   }
 }

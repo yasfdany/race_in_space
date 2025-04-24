@@ -3,13 +3,13 @@ import 'dart:math';
 import 'package:flame/components.dart';
 import 'package:flame/geometry.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../entities/level/level.dart';
 import '../../../../entities/planet/planet.dart';
 import '../../../../entities/ship/ship.dart';
 import '../../../../entities/solar/behaviors/satellite_behavior.dart';
 import '../../../../entities/solar/solar.dart';
+import '../../../../entities/star/star_background.dart';
 
 class Gravity extends Level {
   Gravity()
@@ -19,13 +19,15 @@ class Gravity extends Level {
           zoom: 1,
           canZoom: false,
           world: World(),
-          startingPos: Vector2(0, (1.sh / 3)),
+          startingPos: Vector2(0, 280),
           spaceColor: Color(0xFF2E3A87),
         );
 
   @override
   World get world {
     return World(children: [
+      background,
+      StarBackground(),
       Planet(
         radius: 40,
         gravityArea: 3,

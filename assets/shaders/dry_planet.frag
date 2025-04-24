@@ -26,15 +26,6 @@ float dither_size = 2.0;
 const int octaves = 3;
 bool should_dither = true;
 
-// Planet colors
-vec4 colors[] = {
-    lighterColor, 
-    lightColor, 
-    midColor, 
-    darkColor, 
-    darkerColor
-};
-
 out vec4 fragColor;
 
 float rand(vec2 coord) {
@@ -82,6 +73,13 @@ vec2 spherify(vec2 uv) {
 }
 
 void main() {
+    vec4 colors[5];
+    colors[0] = lighterColor;
+    colors[1] = lightColor;
+    colors[2] = midColor;
+    colors[3] = darkColor;
+    colors[4] = darkerColor;
+    
     vec2 uv = FlutterFragCoord().xy / iResolution;
     uv.x *= iResolution.x / iResolution.y;
     
@@ -119,7 +117,20 @@ void main() {
     
     // Select color with full opacity
     float posterized = floor(c * 4.0)/4.0;
-    vec4 col = colors[int(clamp(posterized, 0.0, 1.0) * 4.0)];
+    const int idx = int(clamp(posterized, 0.0, 0.9999) * 4.0);
+
+    vec4 col;
+    if (idx == 0) {
+        col = colors[0];
+    } else if (idx == 1) {
+        col = colors[1];
+    } else if (idx == 2) {
+        col = colors[2];
+    } else if (idx == 3) {
+        col = colors[3];
+    } else {
+        col = colors[4];
+    }
     
     // Final output with guaranteed full opacity inside planet
     fragColor = vec4(col.rgb, circle_alpha);

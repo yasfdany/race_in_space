@@ -1,6 +1,8 @@
 import 'package:flame/flame.dart';
+import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_soloud/flutter_soloud.dart';
 import 'package:get_it/get_it.dart';
 
 import 'app.dart';
@@ -19,8 +21,20 @@ void main() async {
   await ScreenUtil.ensureScreenSize();
   Flame.device.fullScreen();
   Flame.device.setPortraitUpOnly();
+  FlameAudio.audioCache.loadAll([
+    'bgm_1.aac',
+    'bgm_2.aac',
+    'bgm_3.aac',
+    'bgm_4.aac',
+  ]);
 
   GetItConfig.register();
+
+  await SoLoud.instance.init(
+    sampleRate: 44100,
+    bufferSize: 2048,
+    channels: Channels.stereo,
+  );
 
   runApp(const App());
 }
