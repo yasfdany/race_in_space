@@ -22,8 +22,8 @@ class PullBehavior extends DraggableBehavior<Ship> {
       parent.shipSprite.angle = atan2(-direction.y, -direction.x) + tau / 4;
     }
 
-    double distance =
-        parent.startPosition.distanceTo(parent.position).clamp(0, 100);
+    final distance =
+        parent.startPosition.distanceTo(parent.position).clamp(0.0, 100.0);
     _gameState.aimVelocity =
         -(parent.position - parent.startPosition).normalized() * distance * 5;
 
@@ -34,8 +34,8 @@ class PullBehavior extends DraggableBehavior<Ship> {
   void onDragEnd(DragEndEvent event) {
     if (parent.state == ShipState.moving) return;
     parent.state = ShipState.moving;
-    double distance =
-        parent.startPosition.distanceTo(parent.position).clamp(0, 100);
+    final distance =
+        parent.startPosition.distanceTo(parent.position).clamp(0.0, 100.0);
     parent.velocity =
         -(parent.position - parent.startPosition).normalized() * distance * 5;
     _gameState.aimVelocity = Vector2.zero();

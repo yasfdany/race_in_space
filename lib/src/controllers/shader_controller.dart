@@ -4,11 +4,13 @@ class ShaderController {
   ShaderController() {
     init();
   }
+  late final FragmentProgram _nebulaeFragment;
   late final FragmentProgram _gravityBubbleFragment;
   late final FragmentProgram _dryPlanetFragment;
   late final FragmentProgram _gasPlanetFragment;
   late final FragmentProgram _solarFragment;
 
+  FragmentShader get nebulaeShader => _nebulaeFragment.fragmentShader();
   FragmentShader get gravityBubbleShader =>
       _gravityBubbleFragment.fragmentShader();
   FragmentShader get dryPlanetShader => _dryPlanetFragment.fragmentShader();
@@ -16,6 +18,9 @@ class ShaderController {
   FragmentShader get solarShader => _solarFragment.fragmentShader();
 
   void init() async {
+    _nebulaeFragment = await FragmentProgram.fromAsset(
+      'assets/shaders/nebulae_gas.frag',
+    );
     _gravityBubbleFragment = await FragmentProgram.fromAsset(
       'assets/shaders/gravity_bubble.frag',
     );

@@ -24,11 +24,11 @@ class SatelliteBehavior extends Behavior<Solar> {
   void update(double dt) {
     super.update(dt);
     parent.angle += dt * 0.5;
-    double x = radius * cos(parent.angle);
-    double y = radius * sin(parent.angle);
-    parent.position = Vector2(
-      x + center.x,
-      y + center.y,
-    );
+
+    final x = radius * cos(parent.angle);
+    final y = radius * sin(parent.angle);
+
+    parent.position.x = x + center.x;
+    parent.position.y = y + center.y;
   }
 }

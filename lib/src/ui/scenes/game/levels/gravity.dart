@@ -46,6 +46,7 @@ class Gravity extends Level {
       double satelliteY = radius * sin(angle);
 
       return Solar(
+        index: i,
         angle: angle,
         position: Vector2(satelliteX, satelliteY),
       )..add(SatelliteBehavior(center: Vector2.zero(), radius: 90));

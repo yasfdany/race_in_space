@@ -6,7 +6,7 @@ import '../../../utils/helpers/random_helper.dart';
 import '../solar.dart';
 
 class FloatyBehavior extends Behavior<Solar> {
-  double _time = 0;
+  double time = 0;
 
   final double amplitudeX = RandomHelper.rangeDouble(
     min: 1,
@@ -46,11 +46,11 @@ class FloatyBehavior extends Behavior<Solar> {
   @override
   void update(double dt) {
     super.update(dt);
-    _time += dt;
+    time += dt;
 
-    parent.x = baseX + amplitudeX * sin(_time * speedX);
-    parent.y = baseY + amplitudeY * cos(_time * speedY);
+    parent.x = baseX + amplitudeX * sin(time * speedX);
+    parent.y = baseY + amplitudeY * cos(time * speedY);
 
-    parent.angle = rotationAmplitude * sin(_time * rotationSpeed);
+    parent.angle = rotationAmplitude * sin(time * rotationSpeed);
   }
 }

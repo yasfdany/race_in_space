@@ -67,6 +67,7 @@ class Asteroids extends Level {
       double satelliteY = radius * sin(angle);
 
       return Solar(
+        index: i,
         angle: angle,
         position: _planet.position + Vector2(satelliteX, satelliteY),
       );

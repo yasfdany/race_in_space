@@ -1,17 +1,19 @@
-import 'dart:ui';
-
 import 'package:flame/components.dart';
 import 'package:flame/post_process.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_shaders/flutter_shaders.dart';
+
+import '../../../../main.dart';
+import '../../../config/di/get_it_ext.dart';
 
 class NebulaeGasPostProcess extends PostProcess {
   NebulaeGasPostProcess({
     required this.color,
   });
   late World world;
-  late final FragmentProgram fragmentProgram;
-  late final FragmentShader shader;
+  late final shader = shaderController.nebulaeShader;
+
+  final shaderController = locator.shaderController;
   late final seed = DateTime.now().millisecondsSinceEpoch % 1000.0;
 
   final Color color;
@@ -22,14 +24,6 @@ class NebulaeGasPostProcess extends PostProcess {
   void update(double dt) {
     super.update(dt);
     time += dt;
-  }
-
-  @override
-  void onLoad() async {
-    fragmentProgram = await FragmentProgram.fromAsset(
-      'assets/shaders/nebulae_gas.frag',
-    );
-    shader = fragmentProgram.fragmentShader();
   }
 
   @override

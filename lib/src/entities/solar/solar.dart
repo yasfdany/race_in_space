@@ -1,5 +1,6 @@
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
+import 'package:flame/effects.dart';
 import 'package:flame_behaviors/flame_behaviors.dart';
 import 'package:flutter/material.dart';
 
@@ -13,7 +14,11 @@ class Solar extends PositionedEntity with HasGameReference<GameScene> {
   Solar({
     required super.position,
     super.angle = 0,
+    this.index = 0,
   }) : super(behaviors: _buildBehaviors);
+
+  int index;
+  bool collected = false;
 
   final _lightSource = Paint()
     ..color = Colors.deepOrange.withValues(alpha: 0.8)
@@ -37,7 +42,16 @@ class Solar extends PositionedEntity with HasGameReference<GameScene> {
   void onLoad() {
     anchor = Anchor.center;
     size = Vector2.all(20);
+    scale = Vector2.zero();
     add(SolarShader(size: size));
+    add(ScaleEffect.to(
+      Vector2.all(1),
+      EffectController(
+        startDelay: index * 0.1,
+        duration: 0.8,
+        curve: Curves.elasticOut,
+      ),
+    ));
   }
 
   @override

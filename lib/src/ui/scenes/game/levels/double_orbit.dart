@@ -63,6 +63,7 @@ class DoubleOrbit extends Level {
       double satelliteY = radius * sin(angle);
 
       return Solar(
+        index: i,
         angle: angle,
         position: _planet1.position + Vector2(satelliteX, satelliteY),
       );
@@ -78,6 +79,7 @@ class DoubleOrbit extends Level {
       double satelliteY = radius * sin(angle);
 
       return Solar(
+        index: i + 3,
         angle: angle,
         position: _planet2.position + Vector2(satelliteX, satelliteY),
       );

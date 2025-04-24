@@ -1,12 +1,15 @@
 import 'dart:math';
 
 import 'package:flame/components.dart';
+import 'package:flame/effects.dart';
 import 'package:flame/geometry.dart';
 import 'package:flame_behaviors/flame_behaviors.dart';
+import 'package:flutter/material.dart';
 
 import '../../../main.dart';
 import '../../ui/scenes/game/controllers/game_controller.dart';
 import '../../ui/scenes/game/game_scene.dart';
+import '../solar/solar.dart';
 import '../trajectory/trajectory.dart';
 import 'behaviors/pull_behavior.dart';
 import 'behaviors/velocity_behavior.dart';
@@ -45,15 +48,19 @@ class Ship extends PositionedEntity with HasGameReference<GameScene> {
   ];
 
   late final startPosition = position.clone();
+
   @override
   void onLoad() {
+    position.y = (game.size.y / 2) + 100;
     size = Vector2(56, 56);
     anchor = Anchor.center;
     shipSprite = ShipSprite(
       position: size / 2,
     );
+
     addAll(trajectories);
     add(shipSprite);
+    animateShipAppear();
   }
 
   @override
@@ -64,19 +71,42 @@ class Ship extends PositionedEntity with HasGameReference<GameScene> {
       state = ShipState.moving;
     }
     final viewportSize = (game.size / 2) / game.camera.viewfinder.zoom;
-    if (position.x > viewportSize.x ||
-        position.x < -viewportSize.x ||
-        position.y > viewportSize.y ||
-        position.y < -viewportSize.y) {
+    if ((position.x > viewportSize.x ||
+            position.x < -viewportSize.x ||
+            position.y > viewportSize.y ||
+            position.y < -viewportSize.y) &&
+        state == ShipState.moving) {
       reset();
     }
   }
 
   void reset() {
     _gameController.state.aimVelocity = Vector2.zero();
+
     position = _gameController.state.level.startingPos;
+    position.y = (game.size.y / 2) + 100;
+
+    animateShipAppear(delay: false, initial: false);
+
     shipSprite.angle = 0;
     velocity = Vector2(0, 0);
     state = ShipState.idle;
+  }
+
+  void animateShipAppear({
+    bool delay = true,
+    bool initial = true,
+  }) {
+    final isWin = game.world.children.whereType<Solar>().isEmpty;
+    if (isWin && !initial) return;
+
+    add(MoveEffect.to(
+      _gameController.state.level.startingPos,
+      EffectController(
+        startDelay: delay ? _gameController.state.level.solar * 0.1 : 0,
+        duration: 1,
+        curve: Curves.fastOutSlowIn,
+      ),
+    ));
   }
 }
