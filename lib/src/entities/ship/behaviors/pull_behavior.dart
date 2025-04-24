@@ -39,8 +39,10 @@ class PullBehavior extends DraggableBehavior<Ship> {
     parent.velocity =
         -(parent.position - parent.startPosition).normalized() * distance * 5;
     _gameState.aimVelocity = Vector2.zero();
-    parent.shipSprite.exhaust.animationTicker?.reset();
     parent.shipSprite.exhaust.playing = true;
+    parent.shipSprite.exhaust.scale = Vector2.all(
+      (parent.velocity.y / 200).abs().clamp(0, 1.2),
+    );
 
     super.onDragEnd(event);
   }

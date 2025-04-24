@@ -19,22 +19,24 @@ class Exhaust extends SpriteAnimationComponent {
 
   @override
   void onLoad() {
+    size = Vector2(64, 100);
+    scale = Vector2.zero();
     playing = false;
     animation = SpriteAnimation.fromFrameData(
       assetsController.exhaust,
       SpriteAnimationData.sequenced(
         amount: 18,
-        stepTime: 0.1,
+        stepTime: 0.05,
         textureSize: Vector2(128, 200),
         loop: false,
       ),
     );
-  }
 
-  @override
-  void update(double dt) {
-    super.update(dt);
-    size = Vector2(64, 100);
+    animationTicker?.onComplete = () {
+      playing = false;
+      animationTicker?.reset();
+      scale = Vector2.zero();
+    };
   }
 
   @override

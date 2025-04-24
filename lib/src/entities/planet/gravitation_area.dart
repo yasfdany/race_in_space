@@ -1,9 +1,11 @@
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame/extensions.dart';
+import 'package:flame/geometry.dart';
 import 'package:flame_behaviors/flame_behaviors.dart';
 
 import '../../ui/scenes/game/game_scene.dart';
+import '../../utils/helpers/random_helper.dart';
 import 'behaviors/gravity_behavior.dart';
 import 'planet.dart';
 import 'shaders/gravitation_area_shader.dart';
@@ -28,6 +30,10 @@ class GravitationArea extends PositionedEntity
   @override
   void onLoad() {
     size = Vector2.all(radius * 2);
+    angle = RandomHelper.rangeDouble(
+      min: -tau,
+      max: tau,
+    );
     add(GravitationAreaShader(
       size: size,
       color: game.background.color.darken(0.8),
