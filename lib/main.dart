@@ -1,12 +1,10 @@
 import 'package:flame/flame.dart';
 import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_soloud/flutter_soloud.dart';
 import 'package:get_it/get_it.dart';
 
 import 'app.dart';
-import 'src/config/di/get_it_config.dart';
 
 final locator = GetIt.instance;
 
@@ -18,7 +16,7 @@ T registerOnce<T extends Object>(T controller) {
 }
 
 void main() async {
-  await ScreenUtil.ensureScreenSize();
+  WidgetsFlutterBinding.ensureInitialized();
   Flame.device.fullScreen();
   Flame.device.setPortraitUpOnly();
   FlameAudio.audioCache.loadAll([
@@ -27,8 +25,6 @@ void main() async {
     'bgm_3.aac',
     'bgm_4.aac',
   ]);
-
-  GetItConfig.register();
 
   await SoLoud.instance.init(
     sampleRate: 44100,

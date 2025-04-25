@@ -1,6 +1,5 @@
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../../main.dart';
@@ -21,6 +20,8 @@ class WinDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+
     return Stack(
       children: [
         Positioned.fill(
@@ -31,7 +32,7 @@ class WinDialog extends StatelessWidget {
         Center(
           child: Container(
             padding: EdgeInsets.all(24),
-            width: 0.6.sw.clamp(0, 400),
+            width: (size.width * 0.6).clamp(0, 300),
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(8),
@@ -47,10 +48,16 @@ class WinDialog extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     RectangleButton(
+                      color: Colors.green,
+                      width: 90,
+                      height: 30,
                       text: 'Main Menu',
                       onTap: () => context.go(MainMenuPage.routeName),
                     ),
                     RectangleButton(
+                      color: Colors.green,
+                      width: 90,
+                      height: 30,
                       text: 'Next Level',
                       onTap: () {
                         final gameController = locator.get<GameController>();

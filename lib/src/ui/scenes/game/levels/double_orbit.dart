@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flame/components.dart';
+import 'package:flame/extensions.dart';
 import 'package:flame/geometry.dart';
 import 'package:flutter/material.dart';
 
@@ -20,7 +21,7 @@ class DoubleOrbit extends Level {
           solar: 6,
           world: World(),
           startingPos: Vector2(0, 280),
-          spaceColor: Color(0xFF7C4DFF),
+          spaceColor: Color(0xFF7C4DFF).darken(0.1),
         );
 
   Planet get _planet1 {

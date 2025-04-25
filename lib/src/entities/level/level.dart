@@ -28,7 +28,7 @@ class Level {
     this.canZoom = true,
   });
 
-  late NebulaeGasBackground background = NebulaeGasBackground(
-    color: spaceColor,
-  );
+  NebulaeGasBackground get background => NebulaeGasBackground(
+        color: spaceColor,
+      );
 }

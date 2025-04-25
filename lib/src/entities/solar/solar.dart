@@ -1,9 +1,12 @@
+import 'package:awesome_extensions/awesome_extensions_dart.dart';
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
 import 'package:flame_behaviors/flame_behaviors.dart';
 import 'package:flutter/material.dart';
 
+import '../../../main.dart';
+import '../../config/di/get_it_ext.dart';
 import '../../ui/scenes/game/game_scene.dart';
 import '../../utils/helpers/random_helper.dart';
 import 'behaviors/collect_behavior.dart';
@@ -16,6 +19,8 @@ class Solar extends PositionedEntity with HasGameReference<GameScene> {
     super.angle = 0,
     this.index = 0,
   }) : super(behaviors: _buildBehaviors);
+
+  final audioController = locator.audioController;
 
   int index;
   bool collected = false;
@@ -43,6 +48,14 @@ class Solar extends PositionedEntity with HasGameReference<GameScene> {
     anchor = Anchor.center;
     size = Vector2.all(20);
     scale = Vector2.zero();
+
+    (index * 0.1).delay(
+      () => audioController.playSolarAppear(
+        position,
+        1 + (index * 0.1),
+      ),
+    );
+
     add(SolarShader(size: size));
     add(ScaleEffect.to(
       Vector2.all(1),

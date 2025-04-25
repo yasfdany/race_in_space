@@ -1,9 +1,6 @@
 import 'dart:ui';
 
 class ShaderController {
-  ShaderController() {
-    init();
-  }
   late final FragmentProgram _nebulaeFragment;
   late final FragmentProgram _gravityBubbleFragment;
   late final FragmentProgram _dryPlanetFragment;
@@ -17,7 +14,7 @@ class ShaderController {
   FragmentShader get gasPlanetShader => _gasPlanetFragment.fragmentShader();
   FragmentShader get solarShader => _solarFragment.fragmentShader();
 
-  void init() async {
+  Future<void> init() async {
     _nebulaeFragment = await FragmentProgram.fromAsset(
       'assets/shaders/nebulae_gas.frag',
     );

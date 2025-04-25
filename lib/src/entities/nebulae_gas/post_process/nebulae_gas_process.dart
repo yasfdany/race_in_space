@@ -5,6 +5,7 @@ import 'package:flutter_shaders/flutter_shaders.dart';
 
 import '../../../../main.dart';
 import '../../../config/di/get_it_ext.dart';
+import '../../../utils/helpers/random_helper.dart';
 
 class NebulaeGasPostProcess extends PostProcess {
   NebulaeGasPostProcess({
@@ -14,7 +15,7 @@ class NebulaeGasPostProcess extends PostProcess {
   late final shader = shaderController.nebulaeShader;
 
   final shaderController = locator.shaderController;
-  late final seed = DateTime.now().millisecondsSinceEpoch % 1000.0;
+  late final seed = RandomHelper.choose([1, 2, 3, 4, 6, 7, 8, 9]).toDouble();
 
   final Color color;
 

@@ -6,10 +6,6 @@ import '../../r.dart' show AssetImages;
 import '../utils/extensions/assets_ext.dart';
 
 class AssetsController {
-  AssetsController() {
-    init();
-  }
-
   late Image rocket;
   late Image finish;
   late Image asteroids;
@@ -18,7 +14,7 @@ class AssetsController {
   late Image exhaust;
   late Image explosion;
 
-  void init() async {
+  Future<void> init() async {
     rocket = await Flame.images.load(
       AssetImages.rocket.fileName,
     );

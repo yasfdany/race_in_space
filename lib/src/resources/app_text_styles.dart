@@ -1,16 +1,15 @@
 import 'dart:ui' show FontWeight;
 
 import 'package:flutter/painting.dart' show TextStyle;
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AppTextStyles {
-  static double get xl => 24.sp;
-  static double get large => 20.sp;
-  static double get medium => 16.sp;
-  static double get small => 14.sp;
-  static double get xs => 12.sp;
-  static double get x2s => 10.sp;
-  static double get x3s => 8.sp;
+  static double get xl => 24;
+  static double get large => 20;
+  static double get medium => 16;
+  static double get small => 14;
+  static double get xs => 12;
+  static double get x2s => 10;
+  static double get x3s => 8;
 
   static FontWeight get regular => FontWeight.w400;
   static FontWeight get bold => FontWeight.w700;

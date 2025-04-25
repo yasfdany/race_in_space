@@ -1,7 +1,9 @@
+import 'package:flame/extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../../../main.dart';
+import '../../../config/di/get_it_ext.dart';
 import '../texts/text.dart';
 
 class RectangleButton extends StatefulWidget {
@@ -35,6 +37,7 @@ class RectangleButton extends StatefulWidget {
 }
 
 class _RectangleButtonState extends State<RectangleButton> {
+  late final audioController = locator.audioController;
   bool isPressed = false;
 
   @override
@@ -45,6 +48,7 @@ class _RectangleButtonState extends State<RectangleButton> {
     return GestureDetector(
       onTap: widget.disabled ? null : widget.onTap,
       onTapDown: (details) async {
+        audioController.playTap();
         setState(() {
           isPressed = true;
         });
@@ -59,31 +63,52 @@ class _RectangleButtonState extends State<RectangleButton> {
           isPressed = false;
         });
       },
-      child: Animate(
-        target: isPressed ? 1 : 0,
-        effects: [
-          ScaleEffect(
-            begin: Offset(1, 1),
-            end: Offset(0.9, 0.9),
-            duration: 100.ms,
+      child: Stack(
+        children: [
+          Container(
+            width: widget.width,
+            height: widget.height,
+            margin: EdgeInsets.only(top: 6),
+            decoration: BoxDecoration(
+              color: defaultColor.darken(0.3),
+              borderRadius: BorderRadius.circular(4),
+            ),
+          ),
+          Animate(
+            target: isPressed ? 1 : 0,
+            effects: [
+              MoveEffect(
+                begin: Offset(0, 0),
+                end: Offset(0, 6),
+                duration: 50.ms,
+              ),
+            ],
+            child: Container(
+              width: widget.width,
+              height: widget.height,
+              padding: widget.padding ?? EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                color: widget.disabled ? disabledColor : defaultColor,
+                borderRadius: BorderRadius.circular(4),
+                border: widget.border ??
+                    Border.symmetric(
+                      horizontal: BorderSide(
+                        color: Colors.white.withValues(
+                          alpha: 0.2,
+                        ),
+                      ),
+                    ),
+              ),
+              alignment: Alignment.center,
+              child: widget.child ??
+                  TextMedium(
+                    widget.text ?? '',
+                    color: Colors.white,
+                    textAlign: TextAlign.center,
+                  ),
+            ),
           ),
         ],
-        child: Container(
-          width: widget.width,
-          height: widget.height,
-          padding: widget.padding ?? EdgeInsets.all(8.w),
-          decoration: BoxDecoration(
-            color: widget.disabled ? disabledColor : defaultColor,
-            borderRadius: BorderRadius.circular(8.w),
-            border: widget.border,
-          ),
-          alignment: Alignment.center,
-          child: widget.child ??
-              TextMedium(
-                widget.text ?? '',
-                color: Colors.white,
-              ),
-        ),
       ),
     );
   }

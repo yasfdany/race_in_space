@@ -1,12 +1,10 @@
 import 'package:flame/components.dart';
 
-import '../../ui/scenes/game/game_scene.dart';
 import '../../utils/helpers/random_helper.dart';
 import 'big_star.dart';
 import 'small_star.dart';
 
-class StarBackground extends PositionComponent
-    with HasGameReference<GameScene> {
+class StarBackground extends PositionComponent with HasGameReference {
   late final smallStars = List.generate(30, (i) {
     final x = RandomHelper.rangeDouble(
       min: 0,

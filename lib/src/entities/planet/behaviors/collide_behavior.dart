@@ -4,7 +4,7 @@ import 'package:flame_behaviors/flame_behaviors.dart';
 import '../../../../main.dart';
 import '../../../config/di/get_it_ext.dart';
 import '../../../ui/scenes/game/controllers/game_controller.dart';
-import '../../../utils/extensions/camera_extension.dart';
+import '../../../utils/extensions/camera_ext.dart';
 import '../../ship/explosion.dart';
 import '../../ship/ship_sprite.dart';
 import '../planet.dart';

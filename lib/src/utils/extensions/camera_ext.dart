@@ -2,7 +2,7 @@ import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
 import 'package:flame_noise/flame_noise.dart';
 
-extension CameraExtension on CameraComponent {
+extension CameraExt on CameraComponent {
   void shakeCamera({double duration = 0.5}) {
     viewfinder.add(
       MoveEffect.by(

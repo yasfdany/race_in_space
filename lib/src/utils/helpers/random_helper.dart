@@ -3,7 +3,7 @@ import 'dart:math';
 class RandomHelper {
   static final random = Random();
 
-  static bool randomChance(double chance) {
+  static bool chance(double chance) {
     return random.nextDouble() < chance;
   }
 
@@ -15,7 +15,7 @@ class RandomHelper {
     return random.nextInt(max - min) + min;
   }
 
-  static T randomChoose<T>(List<T> list) {
+  static T choose<T>(List<T> list) {
     return list[random.nextInt(list.length)];
   }
 

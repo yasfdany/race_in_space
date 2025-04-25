@@ -13,6 +13,9 @@ import 'setting_controller.dart';
 class AudioController extends ChangeNotifier {
   late SettingController settingController = locator.settingController;
 
+  late AudioSource solarAppear;
+  SoundHandle? solarAppearHandle;
+
   late AudioSource rocketLaunch;
   SoundHandle? rocketLaunchHandle;
 
@@ -24,6 +27,9 @@ class AudioController extends ChangeNotifier {
 
   late AudioSource collect;
   SoundHandle? collectHandle;
+
+  late AudioSource tap;
+  SoundHandle? tapHandle;
 
   final bgm = [
     'bgm_1.aac',
@@ -82,11 +88,39 @@ class AudioController extends ChangeNotifier {
       pos.x,
       pos.y,
       0,
-      volume: 10 * settingController.sfxVolume,
+      volume: 4 * settingController.sfxVolume,
     );
     SoLoud.instance.setRelativePlaySpeed(
       collectHandle!,
       pitch,
+    );
+  }
+
+  void playSolarAppear(Vector2 pos, double pitch) async {
+    solarAppearHandle = await SoLoud.instance.play3d(
+      solarAppear,
+      pos.x,
+      pos.y,
+      0,
+      volume: 4 * settingController.sfxVolume,
+    );
+    SoLoud.instance.setRelativePlaySpeed(
+      solarAppearHandle!,
+      pitch,
+    );
+  }
+
+  void playTap() async {
+    tapHandle = await SoLoud.instance.play(
+      tap,
+      volume: settingController.sfxVolume,
+    );
+    SoLoud.instance.setRelativePlaySpeed(
+      tapHandle!,
+      RandomHelper.rangeDouble(
+        min: 0.8,
+        max: 1.2,
+      ),
     );
   }
 
@@ -108,7 +142,6 @@ class AudioController extends ChangeNotifier {
         volume: settingController.volume,
       );
     });
-    loadSfx();
   }
 
   Future<void> loadSfx() async {
@@ -116,6 +149,8 @@ class AudioController extends ChangeNotifier {
     combust = await loadAudio('assets/audio/combust.mp3');
     explode = await loadAudio('assets/audio/explode.mp3');
     collect = await loadAudio('assets/audio/collect.mp3');
+    solarAppear = await loadAudio('assets/audio/solar_appear.mp3');
+    tap = await loadAudio('assets/audio/tap.mp3');
   }
 
   Future<AudioSource> loadAudio(String path) async {

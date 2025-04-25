@@ -1,10 +1,7 @@
 import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:oktoast/oktoast.dart';
 
-import 'main.dart';
-import 'src/config/di/get_it_ext.dart';
 import 'src/config/route/router_controller.dart';
 
 class App extends StatefulWidget {
@@ -19,7 +16,6 @@ class _AppState extends State<App> with WidgetsBindingObserver {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
-    locator.audioController.init();
   }
 
   @override
@@ -46,20 +42,17 @@ class _AppState extends State<App> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
-    return ScreenUtilInit(
-      designSize: const Size(430, 932),
-      child: OKToast(
-        backgroundColor: Colors.red,
-        position: ToastPosition.center,
-        child: MaterialApp.router(
-          title: 'Race in Space',
-          debugShowCheckedModeBanner: false,
-          theme: _buildDefaultTheme(),
-          routeInformationParser: router.routeInformationParser,
-          routerDelegate: router.routerDelegate,
-          routeInformationProvider: router.routeInformationProvider,
-          builder: _builder,
-        ),
+    return OKToast(
+      backgroundColor: Colors.red,
+      position: ToastPosition.center,
+      child: MaterialApp.router(
+        title: 'Race in Space',
+        debugShowCheckedModeBanner: false,
+        theme: _buildDefaultTheme(),
+        routeInformationParser: router.routeInformationParser,
+        routerDelegate: router.routerDelegate,
+        routeInformationProvider: router.routeInformationProvider,
+        builder: _builder,
       ),
     );
   }
