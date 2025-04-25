@@ -50,7 +50,7 @@ class _PopButtonState extends State<PopButton> {
             target: isPressed ? 1 : 0,
             effects: [
               ScaleEffect(
-                end: Offset(0.8, 0.8),
+                end: Offset(0.9, 0.9),
                 duration: 50.ms,
               ),
             ],
