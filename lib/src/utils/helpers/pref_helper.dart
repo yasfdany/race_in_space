@@ -19,4 +19,12 @@ class PrefHelper {
   set lastLevel(int value) {
     _prefs.setInt('last_level', value);
   }
+
+  bool get tutorialShown {
+    return _prefs.getBool('tutorial_shown') ?? false;
+  }
+
+  set tutorialShown(bool value) {
+    _prefs.setBool('tutorial_shown', value);
+  }
 }

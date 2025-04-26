@@ -10,12 +10,15 @@ import 'package:flutter/widgets.dart';
 import '../../../../main.dart';
 import '../../../config/di/get_it_ext.dart';
 import '../../../ui/scenes/game/controllers/game_state.dart';
+import '../../../ui/scenes/game/ui/tutorial_overlay.dart';
 import '../../trail/trail.dart';
 import '../ship.dart';
 
 class PullBehavior extends DraggableBehavior<Ship> {
   final gameState = locator.get<GameState>();
   final audioController = locator.audioController;
+  final prefHelper = locator.prefHelper;
+  late final tutorialShown = prefHelper.tutorialShown;
 
   @override
   void onDragUpdate(DragUpdateEvent event) {
@@ -31,6 +34,14 @@ class PullBehavior extends DraggableBehavior<Ship> {
         parent.startPosition.distanceTo(parent.position).clamp(0.0, 100.0);
     gameState.aimVelocity =
         -(parent.position - parent.startPosition).normalized() * distance * 5;
+
+    if (!tutorialShown &&
+        parent.game.overlays.isActive(TutorialOverlay.overlayName)) {
+      if (distance > 30) {
+        parent.game.overlays.remove(TutorialOverlay.overlayName);
+        prefHelper.tutorialShown = true;
+      }
+    }
 
     super.onDragUpdate(event);
   }

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 
 import '../../../../main.dart';
+import '../../../config/di/get_it_ext.dart';
 import '../../../utils/extensions/widget_ext.dart';
 import 'controllers/game_controller.dart';
 import 'controllers/game_state.dart';
@@ -10,6 +11,7 @@ import 'game_scene.dart';
 import 'ui/hud.dart';
 import 'ui/lose_dialog.dart';
 import 'ui/pause_dialog.dart';
+import 'ui/tutorial_overlay.dart';
 import 'ui/win_dialog.dart';
 
 class GamePage extends StatefulWidget {
@@ -26,6 +28,8 @@ class _GamePageState extends State<GamePage> {
   late final GameState state;
   late final GameController controller;
 
+  final prefHelper = locator.prefHelper;
+
   @override
   void initState() {
     super.initState();
@@ -35,6 +39,12 @@ class _GamePageState extends State<GamePage> {
     controller = registerOnce<GameController>(
       GameController(state, game),
     );
+
+    Future.delayed(1.seconds, () {
+      if (!prefHelper.tutorialShown) {
+        game.overlays.add(TutorialOverlay.overlayName);
+      }
+    });
   }
 
   @override
@@ -63,6 +73,9 @@ class _GamePageState extends State<GamePage> {
             'dark_overlay',
           ],
           overlayBuilderMap: {
+            TutorialOverlay.overlayName: (context, game) {
+              return TutorialOverlay(game: game);
+            },
             PauseDialog.overlayName: (context, game) {
               return PauseDialog(game: game);
             },

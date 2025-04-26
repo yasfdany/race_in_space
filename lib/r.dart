@@ -13,4 +13,5 @@ class AssetImages {
   static const String linkedin = 'assets/images/linkedin.png';
   static const String back = 'assets/images/back.png';
   static const String pause = 'assets/images/pause.png';
+  static const String hand = 'assets/images/hand.png';
 }
