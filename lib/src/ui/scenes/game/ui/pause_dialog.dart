@@ -1,29 +1,36 @@
 import 'package:flame/game.dart';
+import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:go_router/go_router.dart';
 import 'package:watch_it/watch_it.dart';
 
 import '../../../../../main.dart';
+import '../../../../config/di/get_it_ext.dart';
 import '../../../../entities/level/level.dart';
 import '../../../components/buttons/rectangle_button.dart';
 import '../../../components/texts/text_large.dart';
-import '../../levels/controllers/level_state.dart';
 import '../../main_menu/main_menu_page.dart';
-import '../controllers/game_controller.dart';
 import '../controllers/game_state.dart';
 import 'glass_container.dart';
 
-class WinDialog extends WatchingWidget {
-  WinDialog({
+class PauseDialog extends WatchingStatefulWidget {
+  const PauseDialog({
     super.key,
     required this.game,
   });
 
   final Game game;
 
-  static final overlayName = 'win_dialog';
-  final levelState = locator.get<LevelState>();
+  static final overlayName = 'pause_dialog';
+
+  @override
+  State<PauseDialog> createState() => _PauseDialogState();
+}
+
+class _PauseDialogState extends State<PauseDialog> {
+  final audioController = locator.audioController;
+  bool open = true;
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +44,7 @@ class WinDialog extends WatchingWidget {
         Positioned.fill(
           child: Container(
             color: Colors.black.withValues(alpha: 0.6),
-          ).animate().fadeIn(),
+          ).animate(target: open ? 1 : 0).fadeIn(),
         ),
         Center(
           child: GlassContainer(
@@ -45,7 +52,7 @@ class WinDialog extends WatchingWidget {
             padding: EdgeInsets.all(24),
             color: level.background.color,
             child: _buildContent(level, context),
-          ).animateDialogAppear,
+          ).animateDialogAppear(open),
         ),
       ],
     );
@@ -58,13 +65,21 @@ class WinDialog extends WatchingWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         TextLarge(
-          'Mission\nSuccess!',
+          'Pause Game',
           color: Colors.white,
           textAlign: TextAlign.center,
         ),
         _buildButtons(level, context)
       ],
-    ).animateContentAppear;
+    )
+        .animateContentAppear
+        .animate(
+          target: !open ? 1 : 0,
+        )
+        .fadeOut(
+          duration: 0.3.seconds,
+          curve: Curves.fastOutSlowIn,
+        );
   }
 
   Widget _buildButtons(Level level, BuildContext context) {
@@ -72,16 +87,21 @@ class WinDialog extends WatchingWidget {
       spacing: 12,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        if (level.level < levelState.levels.length)
-          RectangleButton(
-            color: level.background.color,
-            width: 90,
-            text: 'Next Level',
-            onTap: () {
-              final gameController = locator.get<GameController>();
-              gameController.nextLevel();
-            },
-          ),
+        RectangleButton(
+          color: level.background.color,
+          width: 90,
+          text: 'Resume',
+          onTap: () async {
+            audioController.resumeAll();
+            FlameAudio.bgm.resume();
+            widget.game.resumeEngine();
+            setState(() {
+              open = false;
+            });
+            await Future.delayed(0.5.seconds);
+            widget.game.overlays.remove(PauseDialog.overlayName);
+          },
+        ),
         RectangleButton(
           color: Colors.red,
           width: 90,
@@ -93,18 +113,18 @@ class WinDialog extends WatchingWidget {
   }
 }
 
-extension WinDialogAnimation on Widget {
+extension PauseDialogAnimation on Widget {
   Widget get animateContentAppear {
     return animate(
       delay: 0.5.seconds,
     ).fadeIn(
-      duration: 0.1.seconds,
+      duration: 0.3.seconds,
       curve: Curves.fastOutSlowIn,
     );
   }
 
-  Widget get animateDialogAppear {
-    return animate().scaleY(
+  Widget animateDialogAppear(bool open) {
+    return animate(target: open ? 1 : 0).scaleY(
       duration: 0.5.seconds,
       curve: Curves.fastOutSlowIn,
     );

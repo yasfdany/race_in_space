@@ -2,11 +2,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class PrefHelper {
   late final SharedPreferences _prefs;
-  PrefHelper() {
-    init();
-  }
 
-  void init() async {
+  Future<void> init() async {
     _prefs = await SharedPreferences.getInstance();
   }
 
@@ -16,5 +13,10 @@ class PrefHelper {
 
   set animationSpeed(double value) {
     _prefs.setDouble('animationSpeed', value);
+  }
+
+  int get lastLevel => _prefs.getInt('last_level') ?? 1;
+  set lastLevel(int value) {
+    _prefs.setInt('last_level', value);
   }
 }

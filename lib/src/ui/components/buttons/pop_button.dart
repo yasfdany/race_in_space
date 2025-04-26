@@ -29,14 +29,11 @@ class _PopButtonState extends State<PopButton> {
     return GestureDetector(
       onTap: widget.disabled ? null : widget.onTap,
       onTapDown: (details) async {
-        audioController.playTap();
+        audioController.playTap(
+          rate: widget.disabled ? 0.5 : null,
+        );
         setState(() {
           isPressed = true;
-        });
-      },
-      onTapUp: (details) {
-        setState(() {
-          isPressed = false;
         });
       },
       onTapCancel: () {
@@ -47,12 +44,24 @@ class _PopButtonState extends State<PopButton> {
       child: Stack(
         children: [
           Animate(
+            onComplete: (controller) {
+              setState(() {
+                isPressed = false;
+              });
+            },
             target: isPressed ? 1 : 0,
             effects: [
-              ScaleEffect(
-                end: Offset(0.9, 0.9),
-                duration: 50.ms,
-              ),
+              if (widget.disabled)
+                ShakeEffect(
+                  offset: Offset(4, 0),
+                  rotation: 0,
+                  duration: 100.ms,
+                )
+              else
+                ScaleEffect(
+                  end: Offset(0.9, 0.9),
+                  duration: 50.ms,
+                ),
             ],
             child: widget.child ?? Container(),
           ),

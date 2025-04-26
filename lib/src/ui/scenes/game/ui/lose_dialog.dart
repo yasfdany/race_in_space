@@ -8,22 +8,20 @@ import '../../../../../main.dart';
 import '../../../../entities/level/level.dart';
 import '../../../components/buttons/rectangle_button.dart';
 import '../../../components/texts/text_large.dart';
-import '../../levels/controllers/level_state.dart';
 import '../../main_menu/main_menu_page.dart';
 import '../controllers/game_controller.dart';
 import '../controllers/game_state.dart';
 import 'glass_container.dart';
 
-class WinDialog extends WatchingWidget {
-  WinDialog({
+class LoseDialog extends WatchingWidget {
+  const LoseDialog({
     super.key,
     required this.game,
   });
 
   final Game game;
 
-  static final overlayName = 'win_dialog';
-  final levelState = locator.get<LevelState>();
+  static final overlayName = 'lose_dialog';
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +41,7 @@ class WinDialog extends WatchingWidget {
           child: GlassContainer(
             width: (size.width * 0.4).clamp(0, 200),
             padding: EdgeInsets.all(24),
-            color: level.background.color,
+            color: Colors.red,
             child: _buildContent(level, context),
           ).animateDialogAppear,
         ),
@@ -58,7 +56,7 @@ class WinDialog extends WatchingWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         TextLarge(
-          'Mission\nSuccess!',
+          'Mission\nFailed!',
           color: Colors.white,
           textAlign: TextAlign.center,
         ),
@@ -72,16 +70,15 @@ class WinDialog extends WatchingWidget {
       spacing: 12,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        if (level.level < levelState.levels.length)
-          RectangleButton(
-            color: level.background.color,
-            width: 90,
-            text: 'Next Level',
-            onTap: () {
-              final gameController = locator.get<GameController>();
-              gameController.nextLevel();
-            },
-          ),
+        RectangleButton(
+          color: Color.fromARGB(255, 22, 139, 112),
+          width: 90,
+          text: 'Retry',
+          onTap: () {
+            final gameController = locator.get<GameController>();
+            gameController.retryLevel();
+          },
+        ),
         RectangleButton(
           color: Colors.red,
           width: 90,
@@ -93,7 +90,7 @@ class WinDialog extends WatchingWidget {
   }
 }
 
-extension WinDialogAnimation on Widget {
+extension LoseDialogAnimation on Widget {
   Widget get animateContentAppear {
     return animate(
       delay: 0.5.seconds,

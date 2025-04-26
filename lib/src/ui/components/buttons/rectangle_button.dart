@@ -10,7 +10,7 @@ class RectangleButton extends StatefulWidget {
   const RectangleButton({
     super.key,
     this.width,
-    this.height,
+    this.height = 36,
     this.child,
     this.text,
     this.color,
@@ -22,7 +22,7 @@ class RectangleButton extends StatefulWidget {
   });
 
   final double? width;
-  final double? height;
+  final double height;
   final Widget? child;
   final String? text;
   final Color? color;

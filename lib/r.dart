@@ -11,4 +11,6 @@ class AssetImages {
   static const String twitter = 'assets/images/twitter.png';
   static const String github = 'assets/images/github.png';
   static const String linkedin = 'assets/images/linkedin.png';
+  static const String back = 'assets/images/back.png';
+  static const String pause = 'assets/images/pause.png';
 }

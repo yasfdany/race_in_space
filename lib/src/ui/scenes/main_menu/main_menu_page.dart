@@ -86,7 +86,6 @@ class _MainMenuPageState extends State<MainMenuPage>
                   onTap: () => context.go(LevelPage.route),
                   text: 'Start',
                   width: 100,
-                  height: 30,
                   color: background.currentColor,
                 ),
                 Gap(42),

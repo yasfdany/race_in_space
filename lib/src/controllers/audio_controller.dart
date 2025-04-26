@@ -39,6 +39,30 @@ class AudioController extends ChangeNotifier {
   ];
   int currentBgm = 0;
 
+  List<SoundHandle?> get handles => [
+        solarAppearHandle,
+        rocketLaunchHandle,
+        combustHandle,
+        explodeHandle,
+        collectHandle,
+      ];
+
+  void pauseAll() {
+    for (final handle in handles) {
+      if (handle != null) {
+        SoLoud.instance.setPause(handle, true);
+      }
+    }
+  }
+
+  void resumeAll() {
+    for (final handle in handles) {
+      if (handle != null) {
+        SoLoud.instance.setPause(handle, false);
+      }
+    }
+  }
+
   void playRocketLaunch() async {
     rocketLaunchHandle = await SoLoud.instance.play3d(
       rocketLaunch,
@@ -110,17 +134,18 @@ class AudioController extends ChangeNotifier {
     );
   }
 
-  void playTap() async {
+  void playTap({double? rate}) async {
     tapHandle = await SoLoud.instance.play(
       tap,
       volume: settingController.sfxVolume,
     );
     SoLoud.instance.setRelativePlaySpeed(
       tapHandle!,
-      RandomHelper.rangeDouble(
-        min: 0.8,
-        max: 1.2,
-      ),
+      rate ??
+          RandomHelper.rangeDouble(
+            min: 0.8,
+            max: 1.2,
+          ),
     );
   }
 

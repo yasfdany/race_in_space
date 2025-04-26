@@ -10,6 +10,8 @@ import '../../../main.dart';
 import '../../config/di/get_it_ext.dart';
 import '../../ui/scenes/game/controllers/game_controller.dart';
 import '../../ui/scenes/game/game_scene.dart';
+import '../../ui/scenes/game/ui/lose_dialog.dart';
+import '../../ui/scenes/game/ui/win_dialog.dart';
 import '../solar/solar.dart';
 import '../trail/trail.dart';
 import '../trajectory/trajectory.dart';
@@ -107,7 +109,18 @@ class Ship extends PositionedEntity with HasGameReference<GameScene> {
     position = gameController.state.level.startingPos;
     position.y = (game.size.y / 2) + 100;
 
-    animateShipAppear(delay: false, initial: false);
+    final isWin = game.world.children.whereType<Solar>().isEmpty;
+    final isLose = gameController.state.attempts <= 0;
+    if (!isWin && isLose && !game.overlays.isActive(WinDialog.overlayName)) {
+      game.overlays.add(LoseDialog.overlayName);
+    }
+
+    animateShipAppear(
+      delay: false,
+      initial: false,
+      isLose: isLose,
+      isWin: isWin,
+    );
 
     shipSprite.angle = 0;
     velocity = Vector2(0, 0);
@@ -117,9 +130,10 @@ class Ship extends PositionedEntity with HasGameReference<GameScene> {
   void animateShipAppear({
     bool delay = true,
     bool initial = true,
+    bool isLose = false,
+    bool isWin = false,
   }) {
-    final isWin = game.world.children.whereType<Solar>().isEmpty;
-    if (isWin && !initial) return;
+    if ((isWin && !initial) || isLose) return;
 
     add(MoveEffect.to(
       gameController.state.level.startingPos,

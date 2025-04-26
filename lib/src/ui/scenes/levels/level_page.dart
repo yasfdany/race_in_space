@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 import 'package:watch_it/watch_it.dart';
 
 import '../../../../main.dart';
+import '../../../../r.dart';
 import '../../../config/di/get_it_ext.dart';
 import '../../../entities/level/level.dart';
 import '../../../utils/extensions/widget_ext.dart';
@@ -32,6 +33,8 @@ class _LevelPageState extends State<LevelPage> {
   final background = MainMenuBackground();
   late final shaderController = locator.shaderController;
   late LevelState state;
+
+  final lastLevel = locator.prefHelper.lastLevel;
 
   @override
   void initState() {
@@ -61,6 +64,21 @@ class _LevelPageState extends State<LevelPage> {
               return _buildPlanet(context, level, index);
             },
           ),
+          Align(
+            alignment: Alignment.topLeft,
+            child: PopButton(
+              onTap: context.pop,
+              child: Container(
+                color: Colors.transparent,
+                padding: EdgeInsets.all(24),
+                child: Image.asset(
+                  AssetImages.back,
+                  filterQuality: FilterQuality.none,
+                  width: 32,
+                ),
+              ),
+            ),
+          ),
           Container(
             width: double.infinity,
             height: double.infinity,
@@ -73,9 +91,11 @@ class _LevelPageState extends State<LevelPage> {
 
   Widget _buildPlanet(BuildContext context, Level level, int index) {
     final scale = 1 + (level.solar / 40);
+    final isLevelLocked = lastLevel < level.level;
 
     return Center(
       child: PopButton(
+        disabled: isLevelLocked,
         onTap: () => _startLevel(context, level),
         child: Column(
           spacing: 24,
@@ -83,7 +103,7 @@ class _LevelPageState extends State<LevelPage> {
             Container(
               decoration: BoxDecoration(
                 border: Border.all(
-                  color: level.spaceColor,
+                  color: isLevelLocked ? Colors.grey : level.spaceColor,
                   width: 2,
                 ),
                 shape: BoxShape.circle,
@@ -91,11 +111,14 @@ class _LevelPageState extends State<LevelPage> {
               child: PlanetWidget(
                 width: 100 * scale,
                 height: 100 * scale,
-                baseColor: level.spaceColor,
+                baseColor: isLevelLocked ? Colors.grey : level.spaceColor,
                 shader: shaderController.dryPlanetShader,
               ),
             ),
-            TextMedium(level.name),
+            TextMedium(
+              level.name,
+              color: isLevelLocked ? Colors.grey : Colors.white,
+            ),
           ],
         ).animate(delay: (index * 100).ms).scaleXY(
               duration: 500.ms,

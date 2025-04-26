@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import '../../../../main.dart';
 import '../../../config/di/get_it_ext.dart';
 import '../../../ui/scenes/game/controllers/game_controller.dart';
+import '../../../ui/scenes/game/ui/lose_dialog.dart';
 import '../../../ui/scenes/game/ui/win_dialog.dart';
 import '../../ship/ship_sprite.dart';
 import '../solar.dart';
@@ -16,6 +17,7 @@ class CollectBehavior extends CollisionBehavior<ShipSprite, Solar> {
   late final state = gameController.state;
 
   final audioController = locator.audioController;
+  final prefHelper = locator.prefHelper;
 
   @override
   void onCollisionStart(
@@ -36,7 +38,12 @@ class CollectBehavior extends CollisionBehavior<ShipSprite, Solar> {
 
     if (state.solarCollected == state.level.solar) {
       await 1.delay();
-      gameController.game.overlays.add(WinDialog.overlayName);
+      if (!gameController.game.overlays.isActive(LoseDialog.overlayName)) {
+        gameController.game.overlays.add(WinDialog.overlayName);
+      }
+      if (state.level.level + 1 > prefHelper.lastLevel) {
+        prefHelper.lastLevel = state.level.level + 1;
+      }
     }
   }
 
