@@ -1,7 +1,9 @@
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 
 import '../../../../main.dart';
+import '../../../utils/extensions/widget_ext.dart';
 import 'controllers/game_controller.dart';
 import 'controllers/game_state.dart';
 import 'game_scene.dart';
@@ -48,10 +50,17 @@ class _GamePageState extends State<GamePage> {
     return Material(
       child: GameWidget<GameScene>(
         game: game,
-        initialActiveOverlays: [],
+        initialActiveOverlays: ['dark_overlay'],
         overlayBuilderMap: {
           WinDialog.overlayName: (context, game) {
             return WinDialog(game: game);
+          },
+          'dark_overlay': (context, game) {
+            return Container(
+              width: double.infinity,
+              height: double.infinity,
+              color: Colors.black,
+            ).ignorePointer.animate().fadeOut(duration: 0.5.seconds);
           },
         },
       ),

@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:go_router/go_router.dart';
@@ -31,7 +32,7 @@ class _IntroPageState extends State<IntroPage> {
     setState(() {
       fadeOut = true;
     });
-    await Future.delayed(1.seconds);
+    await Future.delayed((kDebugMode ? 0 : 2).seconds);
     if (mounted) context.go(MainMenuPage.routeName);
   }
 

@@ -8,6 +8,7 @@ import 'package:watch_it/watch_it.dart';
 import '../../../../main.dart';
 import '../../../config/di/get_it_ext.dart';
 import '../../../entities/level/level.dart';
+import '../../../utils/extensions/widget_ext.dart';
 import '../../components/buttons/pop_button.dart';
 import '../../components/texts/text_medium.dart';
 import '../game/controllers/game_state.dart';
@@ -28,6 +29,7 @@ class LevelPage extends WatchingStatefulWidget {
 }
 
 class _LevelPageState extends State<LevelPage> {
+  final background = MainMenuBackground();
   late final shaderController = locator.shaderController;
   late LevelState state;
 
@@ -45,7 +47,7 @@ class _LevelPageState extends State<LevelPage> {
     return Material(
       child: Stack(
         children: [
-          GameWidget(game: MainMenuBackground()),
+          GameWidget(game: background),
           ListView.separated(
             reverse: true,
             physics: BouncingScrollPhysics(),
@@ -56,94 +58,52 @@ class _LevelPageState extends State<LevelPage> {
             separatorBuilder: (_, __) => Gap(50),
             itemBuilder: (context, index) {
               final level = levels[index];
-              final scale = 1 + (level.solar / 40);
-              return Center(
-                child: PopButton(
-                  onTap: () => _startLevel(context, level),
-                  child: Column(
-                    spacing: 24,
-                    children: [
-                      Container(
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            color: level.spaceColor,
-                            width: 2,
-                          ),
-                          shape: BoxShape.circle,
-                        ),
-                        child: PlanetWidget(
-                          width: 100 * scale,
-                          height: 100 * scale,
-                          baseColor: level.spaceColor,
-                          shader: shaderController.dryPlanetShader,
-                        ),
-                      )
-                          .animate(
-                            delay: (index * 100).ms,
-                          )
-                          .scaleXY(
-                            duration: 300.ms,
-                            curve: Curves.fastOutSlowIn,
-                          ),
-                      TextMedium(level.name)
-                          .animate(
-                            delay: (index * 200).ms,
-                          )
-                          .slideY(
-                            begin: -2,
-                            end: 0,
-                            duration: 300.ms,
-                            curve: Curves.fastOutSlowIn,
-                          )
-                          .fadeIn(),
-                    ],
-                  ),
-                ),
-              );
+              return _buildPlanet(context, level, index);
             },
           ),
+          Container(
+            width: double.infinity,
+            height: double.infinity,
+            color: Colors.black,
+          ).ignorePointer.animate().fadeOut(duration: 0.5.seconds),
         ],
       ),
     );
-
-    // return GridView.builder(
-    //   padding: EdgeInsets.all(12),
-    //   itemCount: levels.length,
-    //   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-    //     crossAxisCount: 3,
-    //     mainAxisSpacing: 12,
-    //     crossAxisSpacing: 12,
-    //     childAspectRatio: 1,
-    //   ),
-    //   itemBuilder: (BuildContext context, int index) {
-    //     final level = levels[index];
-    //     return _buildLevelCard(context, level);
-    //   },
-    // );
   }
 
-  // Widget _buildLevelCard(BuildContext context, Level level) {
-  //   return GestureDetector(
-  //     onTap: () {
-  //       _startLevel(level, context);
-  //     },
-  //     child: Card(
-  //       child: Column(
-  //         mainAxisAlignment: MainAxisAlignment.center,
-  //         children: [
-  //           TextMedium.bold(
-  //             level.name,
-  //             color: Colors.black,
-  //           ),
-  //           TextSmall(
-  //             'Level ${level.level}',
-  //             color: Colors.black,
-  //           ),
-  //         ],
-  //       ),
-  //     ),
-  //   );
-  // }
+  Widget _buildPlanet(BuildContext context, Level level, int index) {
+    final scale = 1 + (level.solar / 40);
+
+    return Center(
+      child: PopButton(
+        onTap: () => _startLevel(context, level),
+        child: Column(
+          spacing: 24,
+          children: [
+            Container(
+              decoration: BoxDecoration(
+                border: Border.all(
+                  color: level.spaceColor,
+                  width: 2,
+                ),
+                shape: BoxShape.circle,
+              ),
+              child: PlanetWidget(
+                width: 100 * scale,
+                height: 100 * scale,
+                baseColor: level.spaceColor,
+                shader: shaderController.dryPlanetShader,
+              ),
+            ),
+            TextMedium(level.name),
+          ],
+        ).animate(delay: (index * 100).ms).scaleXY(
+              duration: 500.ms,
+              curve: Curves.fastOutSlowIn,
+            ),
+      ),
+    );
+  }
 
   void _startLevel(BuildContext context, Level level) {
     final state = registerOnce<GameState>(
