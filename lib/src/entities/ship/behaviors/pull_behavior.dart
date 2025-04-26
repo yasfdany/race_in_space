@@ -38,14 +38,31 @@ class PullBehavior extends DraggableBehavior<Ship> {
   @override
   void onDragEnd(DragEndEvent event) async {
     if (parent.state == ShipState.moving) return;
+    final distance =
+        parent.startPosition.distanceTo(parent.position).clamp(0.0, 100.0);
+    final velocity =
+        -(parent.position - parent.startPosition).normalized() * distance * 5;
+
+    // Prevent player to accidentally launching the ship
+    if (velocity.length < 200) {
+      gameState.aimVelocity = Vector2.zero();
+      parent.add(
+        MoveEffect.to(
+          gameState.level.startingPos,
+          EffectController(
+            duration: 0.1,
+            curve: Curves.fastOutSlowIn,
+          ),
+        ),
+      );
+      return;
+    }
+
     audioController.playRocketLaunch();
     audioController.playCombust();
 
     parent.state = ShipState.moving;
-    final distance =
-        parent.startPosition.distanceTo(parent.position).clamp(0.0, 100.0);
-    parent.velocity =
-        -(parent.position - parent.startPosition).normalized() * distance * 5;
+    parent.velocity = velocity;
 
     gameState.aimVelocity = Vector2.zero();
     parent.shipSprite.exhaust.playing = true;
@@ -53,6 +70,12 @@ class PullBehavior extends DraggableBehavior<Ship> {
       (parent.velocity.y / 200).abs().clamp(0, 1.2),
     );
 
+    _hideTrails();
+
+    super.onDragEnd(event);
+  }
+
+  void _hideTrails() {
     final trails = parent.game.world.children.whereType<Trail>().toList();
     for (final trail in trails) {
       trail.add(OpacityEffect.fadeOut(EffectController(
@@ -60,16 +83,5 @@ class PullBehavior extends DraggableBehavior<Ship> {
         curve: Curves.fastOutSlowIn,
       )));
     }
-
-    // if (parent.position.y < gameState.level.startingPos.y) {
-    //   for (var i = 0; i < trails.length - 1; i++) {
-    //     await Future.delayed(0.1.seconds);
-    //     trails[i].index = i;
-    //     trails[i].position = parent.position.clone();
-    //     trails[i].updateOpacity();
-    //   }
-    // }
-
-    super.onDragEnd(event);
   }
 }
