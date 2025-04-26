@@ -101,6 +101,7 @@ class Ship extends PositionedEntity with HasGameReference<GameScene> {
   void reset() {
     time = 0;
     audioController.stopCombust();
+    gameController.state.attempts--;
     gameController.state.aimVelocity = Vector2.zero();
 
     position = gameController.state.level.startingPos;

@@ -7,6 +7,7 @@ import '../../../utils/extensions/widget_ext.dart';
 import 'controllers/game_controller.dart';
 import 'controllers/game_state.dart';
 import 'game_scene.dart';
+import 'ui/hud.dart';
 import 'ui/win_dialog.dart';
 
 class GamePage extends StatefulWidget {
@@ -50,10 +51,16 @@ class _GamePageState extends State<GamePage> {
     return Material(
       child: GameWidget<GameScene>(
         game: game,
-        initialActiveOverlays: ['dark_overlay'],
+        initialActiveOverlays: [
+          Hud.overlayName,
+          'dark_overlay',
+        ],
         overlayBuilderMap: {
           WinDialog.overlayName: (context, game) {
             return WinDialog(game: game);
+          },
+          Hud.overlayName: (context, game) {
+            return Hud();
           },
           'dark_overlay': (context, game) {
             return Container(
