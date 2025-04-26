@@ -40,8 +40,9 @@ class Asteroids extends Level {
       StarBackground(),
       _planet,
       ..._generateSolarEnergy(),
-      Ship(position: startingPos),
       ..._generateAsteroid(),
+      ...trails,
+      Ship(position: startingPos),
     ]);
   }
 

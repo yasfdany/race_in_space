@@ -35,6 +35,7 @@ class Gravity extends Level {
         color: Color(0xffFF7043),
       ),
       ..._generateSolarSatellite(),
+      ...trails,
       Ship(position: startingPos),
     ]);
   }

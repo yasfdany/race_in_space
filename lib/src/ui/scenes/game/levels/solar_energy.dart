@@ -30,6 +30,7 @@ class SolarEnergy extends Level {
           position: Vector2(0, (i * 50) - 100),
         ),
       ),
+      ...trails,
       Ship(position: startingPos),
     ]);
   }

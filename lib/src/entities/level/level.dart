@@ -2,6 +2,7 @@ import 'package:flame/components.dart';
 import 'package:flutter/material.dart';
 
 import '../nebulae_gas/nebulae_gas_background.dart';
+import '../trail/trail.dart';
 
 class Level {
   String name;
@@ -31,4 +32,7 @@ class Level {
   NebulaeGasBackground get background => NebulaeGasBackground(
         color: spaceColor,
       );
+
+  List<Trail> get trails =>
+      [for (int i = 0; i < 20; i++) Trail(index: 20)..updateOpacity()];
 }

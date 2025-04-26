@@ -1,6 +1,7 @@
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame_behaviors/flame_behaviors.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import 'behaviors/collide_behavior.dart';
@@ -28,7 +29,7 @@ class Planet extends PositionedEntity {
     return [
       PropagatingCollisionBehavior(CircleHitbox()),
       CollideBehavior(),
-      DragBehavior(),
+      if (kDebugMode) DragBehavior(),
     ];
   }
 

@@ -53,6 +53,7 @@ class DoubleOrbit extends Level {
       _planet2,
       ..._generatePlanetSolar1(),
       ..._generatePlanetSolar2(),
+      ...trails,
       Ship(position: startingPos),
     ]);
   }

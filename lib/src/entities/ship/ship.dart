@@ -11,6 +11,7 @@ import '../../config/di/get_it_ext.dart';
 import '../../ui/scenes/game/controllers/game_controller.dart';
 import '../../ui/scenes/game/game_scene.dart';
 import '../solar/solar.dart';
+import '../trail/trail.dart';
 import '../trajectory/trajectory.dart';
 import 'behaviors/pull_behavior.dart';
 import 'behaviors/velocity_behavior.dart';
@@ -41,6 +42,8 @@ class Ship extends PositionedEntity with HasGameReference<GameScene> {
   Vector2 velocity = Vector2(0, 0);
   ShipState state = ShipState.idle;
 
+  double time = 0;
+
   late final trajectories = [
     for (var i = 0; i < 10; i++)
       Trajectory(
@@ -68,10 +71,23 @@ class Ship extends PositionedEntity with HasGameReference<GameScene> {
   @override
   void update(double dt) {
     super.update(dt);
+
     if (velocity.length > 0) {
+      time += dt * 10;
       shipSprite.angle = atan2(velocity.y, velocity.x) + tau / 4;
       state = ShipState.moving;
+
+      if (y < gameController.state.level.startingPos.y - 40) {
+        final trails = game.world.children.whereType<Trail>().toList();
+        final index = time.round().clamp(0, 19);
+
+        trails[index].index = index;
+        trails[index].x = x;
+        trails[index].y = y;
+        trails[index].updateOpacity();
+      }
     }
+
     final viewportSize = (game.size / 2) / game.camera.viewfinder.zoom;
     if ((position.x > viewportSize.x ||
             position.x < -viewportSize.x ||
@@ -83,6 +99,7 @@ class Ship extends PositionedEntity with HasGameReference<GameScene> {
   }
 
   void reset() {
+    time = 0;
     audioController.stopCombust();
     gameController.state.aimVelocity = Vector2.zero();
 
