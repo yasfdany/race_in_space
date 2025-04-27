@@ -92,6 +92,7 @@ class _LevelPageState extends State<LevelPage> {
   Widget _buildPlanet(BuildContext context, Level level, int index) {
     final scale = 1 + (level.solar / 40);
     final isLevelLocked = lastLevel < level.level;
+    final planetColor = isLevelLocked ? Colors.grey : level.spaceColor;
 
     return Center(
       child: PopButton(
@@ -103,15 +104,22 @@ class _LevelPageState extends State<LevelPage> {
             Container(
               decoration: BoxDecoration(
                 border: Border.all(
-                  color: isLevelLocked ? Colors.grey : level.spaceColor,
+                  color: planetColor,
                   width: 2,
                 ),
                 shape: BoxShape.circle,
+                boxShadow: [
+                  BoxShadow(
+                    color: planetColor,
+                    blurRadius: 10,
+                    offset: const Offset(0, 0),
+                  ),
+                ],
               ),
               child: PlanetWidget(
                 width: 100 * scale,
                 height: 100 * scale,
-                baseColor: isLevelLocked ? Colors.grey : level.spaceColor,
+                baseColor: planetColor,
                 shader: shaderController.dryPlanetShader,
               ),
             ),

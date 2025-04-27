@@ -14,6 +14,7 @@ class Trail extends CircleComponent {
   @override
   Future<void> onLoad() {
     paint = Paint()..color = Colors.yellow;
+    opacity = 0;
     return super.onLoad();
   }
 

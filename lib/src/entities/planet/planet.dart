@@ -33,6 +33,15 @@ class Planet extends PositionedEntity {
     ];
   }
 
+  late final shadowColor = Paint()
+    ..color = color.withValues(alpha: 0.8)
+    ..maskFilter = MaskFilter.blur(BlurStyle.normal, 12);
+  late final borderColor = Paint()
+    ..style = PaintingStyle.stroke
+    ..strokeWidth = 2
+    ..color = color;
+  late final lightPosition = (Vector2.zero() + (size / 2)).toOffset();
+
   PlanetType type;
   double radius;
   int gravityArea;
@@ -57,5 +66,20 @@ class Planet extends PositionedEntity {
           color: color,
         ));
     }
+  }
+
+  @override
+  void render(Canvas canvas) {
+    super.render(canvas);
+    canvas.drawCircle(
+      lightPosition,
+      radius,
+      shadowColor,
+    );
+    canvas.drawCircle(
+      lightPosition,
+      radius,
+      borderColor,
+    );
   }
 }

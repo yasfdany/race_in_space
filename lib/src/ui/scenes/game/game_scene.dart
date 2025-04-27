@@ -1,6 +1,7 @@
 import 'package:flame/components.dart';
 import 'package:flame/game.dart';
 import 'package:flame_behaviors/flame_behaviors.dart';
+import 'package:flutter/foundation.dart';
 
 import '../../../../main.dart';
 import '../../../resources/app_text_styles.dart';
@@ -21,12 +22,14 @@ class GameScene extends FlameGame with EntityMixin, HasCollisionDetection {
     world = controller.state.level.world;
     camera.viewfinder.zoom = controller.state.level.zoom;
 
-    add(FpsTextComponent(
-      textRenderer: TextPaint(
-        style: AppTextStyles.regularM,
-      ),
-      position: Vector2(10, 10),
-    ));
+    if (kDebugMode) {
+      add(FpsTextComponent(
+        textRenderer: TextPaint(
+          style: AppTextStyles.regularM,
+        ),
+        position: Vector2(10, 10),
+      ));
+    }
   }
 
   // @override

@@ -80,7 +80,6 @@ class _PlanetWidgetState extends State<PlanetWidget> {
     super.initState();
     startTime = DateTime.now();
 
-    // Update at 60fps
     Timer.periodic(const Duration(milliseconds: 16), (_) {
       final elapsed = DateTime.now().difference(startTime);
       timeNotifier.value = elapsed.inMilliseconds / 1000.0;

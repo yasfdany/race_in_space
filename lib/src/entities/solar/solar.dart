@@ -25,7 +25,7 @@ class Solar extends PositionedEntity with HasGameReference<GameScene> {
   int index;
   bool collected = false;
 
-  final _lightSource = Paint()
+  final shadowColor = Paint()
     ..color = Colors.deepOrange.withValues(alpha: 0.8)
     ..maskFilter = MaskFilter.blur(
       BlurStyle.normal,
@@ -72,7 +72,7 @@ class Solar extends PositionedEntity with HasGameReference<GameScene> {
     super.render(canvas);
     canvas.drawRect(
       Rect.fromLTWH(0, 0, width, height),
-      _lightSource,
+      shadowColor,
     );
   }
 }

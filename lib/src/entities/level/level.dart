@@ -33,6 +33,7 @@ class Level {
         color: spaceColor,
       );
 
-  List<Trail> get trails =>
-      [for (int i = 0; i < 20; i++) Trail(index: 20)..updateOpacity()];
+  List<Trail> get trails => [
+        for (int i = 0; i < 20; i++) Trail(index: 0),
+      ];
 }
