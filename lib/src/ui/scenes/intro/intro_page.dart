@@ -7,7 +7,7 @@ import '../../../../main.dart';
 import '../../../../r.dart';
 import '../../../config/di/get_it_config.dart';
 import '../../../config/di/get_it_ext.dart';
-import '../../components/texts/text_medium.dart';
+import '../../components/texts/text_large.dart';
 import '../main_menu/main_menu_page.dart';
 import '../story/story_page.dart';
 
@@ -62,7 +62,7 @@ class _IntroPageState extends State<IntroPage> {
               height: 32,
               filterQuality: FilterQuality.none,
             ).animateHover,
-            TextMedium(
+            TextLarge(
               'Use headphones for the best experience',
             ),
           ],
