@@ -27,4 +27,12 @@ class PrefHelper {
   set tutorialShown(bool value) {
     _prefs.setBool('tutorial_shown', value);
   }
+
+  bool get storyShown {
+    return _prefs.getBool('story_shown') ?? false;
+  }
+
+  set storyShown(bool value) {
+    _prefs.setBool('story_shown', value);
+  }
 }

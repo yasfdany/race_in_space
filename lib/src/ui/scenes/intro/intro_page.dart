@@ -3,10 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../main.dart';
 import '../../../../r.dart';
 import '../../../config/di/get_it_config.dart';
+import '../../../config/di/get_it_ext.dart';
 import '../../components/texts/text_medium.dart';
 import '../main_menu/main_menu_page.dart';
+import '../story/story_page.dart';
 
 class IntroPage extends StatefulWidget {
   const IntroPage({super.key});
@@ -33,7 +36,13 @@ class _IntroPageState extends State<IntroPage> {
       fadeOut = true;
     });
     await Future.delayed((kDebugMode ? 0 : 2).seconds);
-    if (mounted) context.go(MainMenuPage.routeName);
+    if (mounted) {
+      context.go(
+        locator.prefHelper.storyShown
+            ? MainMenuPage.routeName
+            : StoryPage.routeName,
+      );
+    }
   }
 
   @override

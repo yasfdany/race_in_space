@@ -16,6 +16,9 @@ class AudioController extends ChangeNotifier {
   late AudioSource solarAppear;
   SoundHandle? solarAppearHandle;
 
+  late AudioSource narrator;
+  SoundHandle? narratorHandle;
+
   late AudioSource rocketLaunch;
   SoundHandle? rocketLaunchHandle;
 
@@ -149,6 +152,18 @@ class AudioController extends ChangeNotifier {
     );
   }
 
+  void playNarrator() async {
+    narratorHandle = await SoLoud.instance.play(
+      narrator,
+      volume: settingController.sfxVolume,
+    );
+  }
+
+  void stopNarrator() {
+    if (narratorHandle == null) return;
+    SoLoud.instance.stop(narratorHandle!);
+  }
+
   void stopCombust() {
     if (combustHandle == null) return;
     SoLoud.instance.stop(combustHandle!);
@@ -170,6 +185,7 @@ class AudioController extends ChangeNotifier {
   }
 
   Future<void> loadSfx() async {
+    narrator = await loadAudio('assets/audio/narrator.mp3');
     rocketLaunch = await loadAudio('assets/audio/rocket_launch.mp3');
     combust = await loadAudio('assets/audio/combust.mp3');
     explode = await loadAudio('assets/audio/explode.mp3');

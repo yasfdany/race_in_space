@@ -7,6 +7,7 @@ import '../../ui/scenes/interaction/interaction_page.dart';
 import '../../ui/scenes/intro/intro_page.dart';
 import '../../ui/scenes/levels/level_page.dart';
 import '../../ui/scenes/main_menu/main_menu_page.dart';
+import '../../ui/scenes/story/story_page.dart';
 
 final navigatorKey = GlobalKey<NavigatorState>();
 
@@ -20,6 +21,14 @@ final router = GoRouter(
       pageBuilder: (BuildContext context, GoRouterState state) {
         return NoTransitionPage(
           child: IntroPage(),
+        );
+      },
+    ),
+    GoRoute(
+      path: StoryPage.routeName,
+      pageBuilder: (BuildContext context, GoRouterState state) {
+        return NoTransitionPage(
+          child: StoryPage(),
         );
       },
     ),
