@@ -24,6 +24,7 @@ class CollectBehavior extends CollisionBehavior<ShipSprite, Solar> {
     Set<Vector2> intersectionPoints,
     ShipSprite other,
   ) async {
+    if (other.ship.velocity.length <= 0) return;
     if (parent.collected) return;
     audioController.playCollect(
       parent.position,

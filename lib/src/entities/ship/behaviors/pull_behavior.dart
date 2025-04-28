@@ -23,7 +23,17 @@ class PullBehavior extends DraggableBehavior<Ship> {
   @override
   void onDragUpdate(DragUpdateEvent event) {
     if (parent.state == ShipState.moving) return;
-    parent.position.add(event.localDelta);
+
+    final potentialNewPos = parent.position + event.localDelta;
+    final newDistance = parent.startPosition.distanceTo(parent.position);
+
+    if (newDistance <= 100) {
+      parent.position += event.localDelta;
+    } else {
+      final direction =
+          (potentialNewPos - gameState.level.startingPos).normalized();
+      parent.position = gameState.level.startingPos + direction * 100;
+    }
 
     final direction = parent.position - parent.startPosition;
     if (direction.length > 0) {
@@ -54,7 +64,6 @@ class PullBehavior extends DraggableBehavior<Ship> {
     final velocity =
         -(parent.position - parent.startPosition).normalized() * distance * 5;
 
-    // Prevent player to accidentally launching the ship
     if (velocity.length < 200) {
       gameState.aimVelocity = Vector2.zero();
       parent.add(
