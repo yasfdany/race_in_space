@@ -25,7 +25,7 @@ class PullBehavior extends DraggableBehavior<Ship> {
     if (parent.state == ShipState.moving) return;
 
     final potentialNewPos = parent.position + event.localDelta;
-    final newDistance = parent.startPosition.distanceTo(parent.position);
+    final newDistance = (potentialNewPos - gameState.level.startingPos).length;
 
     if (newDistance <= 100) {
       parent.position += event.localDelta;
